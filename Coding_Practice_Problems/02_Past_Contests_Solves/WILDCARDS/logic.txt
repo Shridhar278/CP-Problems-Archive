@@ -1,0 +1,23 @@
+1 3 2
+
+-1 is left 1 is right
+
+a b c
+
+1 y y :
+
+x 1 y: y-x = 2
+
+R L L
+
+2 2 2:
+
+1 x y
+
+L R = +0
+
+R L = +0
+
+R R = -1
+
+L L = +1

@@ -1,0 +1,18 @@
+QCODE   NAME		       STATUS 	     REMARKS
+=============================================================================================
+1.B 	STAT EXPO		:F :
+1.C 	INCREASE & DECREASE 	:F :
+1.D	TRADER MY BROTHER   	:F :
+1.E 	UNIQUE MATRIX		:A : GRAPH THEORY SURPISE CRAZZY (360+2160+10) (2 cycles SILLY)
+2.B 	QUANTBULBS FUSED	:F :
+2.C 	WHAT THE FLIP!?		:F :
+2.D 	ALIEN PLANET		:F :
+2.E 	OUR RANDOM JUMP		:F :
+2.F 	MYSTERIOUS ALGORITHM	:F :
+===============================================================================================
+S+: SOLVE myself (IN QUANTFEST) (perfectly)
+S: SOLVE myself / SOLVE QUANTFEST (feel)
+A: SOLVE with assistance 
+B: assistance made  me solve
+D: saw SOLUTION
+F: PENDING
