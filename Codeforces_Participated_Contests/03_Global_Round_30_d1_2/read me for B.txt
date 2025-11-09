@@ -1,5 +1,18 @@
-1. for C seeing the solution spent too much time
-   thinking of the algorithm
+CLAIM smallest SUCH sequence upto max hits 10^9
+the smallest of them can be
+[ 2, 7, 19, 43, 115, 271, 547, 1153, 2329, 4903, 9931, 23311,
+62359, 141475, 284593, 657595, 1416805, 2903545, 6914335,
+14468161, 29197201, 59771995, 128216119, 292016107, 610385275 ]
+
+which is only 26 long hence,
+The Worst Case Scenario of O(n^2) won't hit in this case (only 26)
+hence, O(n^2) theoretical time complexity works cuz. you can't make a sequence more than 26 long to encounter TLE
+
+# WORST CASES are NOT the ONLY CASES...
+# NICE MATH insight on CODING problem
+
+
+#CHATGPT approximations...
 
 2. Excellent observation — and yes, **almost** exponential, though not in the clean (a_{n+1} = c,a_n) sense. Let’s unpack why that happens for
 [
@@ -82,4 +95,5 @@ So yes — it’s *exponential-type* growth, not perfectly geometric but increas
 **In short:**
 The sequence grows **exponentially** because every new constraint (each earlier (x)) halves the available candidates on average, forcing the next valid (y) roughly twice as far out.
 
-hence, CLAIM smallest SUCH sequence 
+
+
