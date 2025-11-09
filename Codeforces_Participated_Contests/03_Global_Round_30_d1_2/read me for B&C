@@ -1,0 +1,85 @@
+1. for C seeing the solution spent too much time
+   thinking of the algorithm
+
+2. Excellent observation — and yes, **almost** exponential, though not in the clean (a_{n+1} = c,a_n) sense. Let’s unpack why that happens for
+[
+2,,3,,7,,19,,43,,127,,271,\dots
+]
+
+---
+
+### 1. The condition recap
+
+We require that for all (x<y),
+[
+y\bmod x \text{ is odd.}
+]
+and the sequence is strictly increasing.
+
+With (2) and (3) included, every new term (y) must satisfy:
+
+* (y) **odd** (since (y\bmod2=1)), and
+* (y \equiv 1 \pmod{3}) (since (y\bmod3=1)).
+
+Thus (y = 6k + 1).
+
+Each new (x) introduces another modular filter: (y \bmod x) must be odd, meaning
+[
+y \not\equiv 0 \pmod{x}, \quad y\not\equiv \text{even residue mod }x.
+]
+That chops off half of the remaining residues modulo (x).
+
+---
+
+### 2. Why the gaps grow rapidly
+
+By the time you have a few elements (x_1, x_2, ..., x_n):
+
+* Each (x_i) bans roughly **half** of the residues mod (x_i).
+* These constraints are **independent-ish**, so the density of valid (y) among integers shrinks roughly by a factor of (½) per term.
+
+So the fraction of valid integers left ≈ ( (½)^{n-2} ).
+
+The typical next (y) is roughly inversely proportional to that density ⇒
+[
+a_{n+1} \sim 2^{n-2}.
+]
+
+That’s **exponential growth** in index (n) —
+though the exact constant fluctuates due to residue coincidences.
+
+---
+
+### 3. Numerical growth pattern
+
+| n | term | ratio (a_{n+1}/a_n) |
+| - | ---- | ------------------- |
+| 1 | 2    | —                   |
+| 2 | 3    | 1.5                 |
+| 3 | 7    | 2.33                |
+| 4 | 19   | 2.71                |
+| 5 | 43   | 2.26                |
+| 6 | 127  | 2.95                |
+| 7 | 271  | 2.13                |
+
+Ratios hover around 2–3 — roughly doubling or tripling each step.
+That’s consistent with “exponential-like” growth (base ≈ 2.3).
+
+---
+
+### 4. Expected asymptotic behaviour
+
+Greedy filter sequences like this behave roughly as:
+[
+a_n \approx c , \alpha^n,\quad \alpha \in (2,3),
+]
+where (c) depends on the early residues (your first few terms).
+
+So yes — it’s *exponential-type* growth, not perfectly geometric but increasing at a similar rate.
+
+---
+
+**In short:**
+The sequence grows **exponentially** because every new constraint (each earlier (x)) halves the available candidates on average, forcing the next valid (y) roughly twice as far out.
+
+hence, CLAIM smallest SUCH sequence 
