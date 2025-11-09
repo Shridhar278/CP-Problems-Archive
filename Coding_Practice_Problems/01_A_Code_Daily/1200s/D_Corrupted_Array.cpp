@@ -30,7 +30,7 @@ int32_t main() {
         }
         // case ignore in between LAST is BOSS
         int i;
-        for (i=0;i<n;i++) {
+        for (i=0;i<n+1;i++) {
             if (sum_arr - arr[i] == 2*arr[n+1]) {
                 case2=1;
                 break;
