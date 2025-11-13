@@ -1,0 +1,3 @@
+Global_Round_30 | C_Dungeon
+1063_d2 | C_Monopati
+1200s | D_Three_Activities

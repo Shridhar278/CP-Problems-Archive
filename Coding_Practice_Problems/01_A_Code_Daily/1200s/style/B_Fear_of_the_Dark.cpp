@@ -9,3 +9,7 @@ double borg = distance(bx, by, 0, 0) ; double final_dist = 0 ; bool intersect=tr
 false){ final_dist = std::min( std::max(ap, aorg), std :: max(bp, borg)) ; } else { final_dist = std::max(
 {ab/2, std::min(ap, bp), std::min(aorg, borg)}) ;}std::cout<<std::fixed<<std::setprecision(10)<<final_dist
 <<std::endl;}return 0;}/***************************1886/B. Fear of the Dark******************************/
+
+
+// LACKS perfection NEED some other thing that supports my prowess come on
+// I need to improve more on this fact
