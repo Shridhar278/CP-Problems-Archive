@@ -10,6 +10,7 @@ inline void fast_io() {
 }
 
 // SO MUCH is MISSING :: make nessecary ammendments
+// WANT CLEANER solution :: try again
 
 int32_t main() {
     fast_io();
