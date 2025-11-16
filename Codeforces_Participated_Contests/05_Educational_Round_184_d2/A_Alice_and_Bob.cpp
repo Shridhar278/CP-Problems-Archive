@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// SO MUCH is MISSING :: make nessecary ammendments
+
 int32_t main() {
     fast_io();
     int test;
@@ -35,7 +37,6 @@ int32_t main() {
             if (new_m[count] == alice) {
                 no_sol=0;
                 int y = count; int rev=0;
-                int x1, x2;
                 while (new_m[y] == new_m[count]) {
                     if (y==n-1) {
                         break;
@@ -66,7 +67,7 @@ int32_t main() {
             count++;
         }
         if (no_sol) {
-            cout<<new_m[0];
+            cout<<new_m[n-1]<<endl;
         }
     }
     return 0;
