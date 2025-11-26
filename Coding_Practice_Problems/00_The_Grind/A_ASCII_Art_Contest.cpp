@@ -11,10 +11,17 @@ inline void fast_io() {
 
 int32_t main() {
     fast_io();
-    int test;
-    cin >> test;
-    while (test--) {
-        
-    }
+    char c[] = "check again";
+    char f[] = "final";
+        int n[3];
+        for (int i = 0; i < 3; i++) {
+            cin >> n[i];
+        }
+        if ((*max_element(n, n+3) - *min_element(n, n+3)) >= 10) {
+            cout<<c<<endl;
+        } else {
+            sort(n, n+3);
+            cout<<f<<" "<<n[1]<<endl;
+        }
     return 0;
 }
