@@ -35,9 +35,54 @@ int32_t main() {
     while (test--) {
         int n, k; cin >> n >> k;
         vector<int> arr(n);
+        vector<int> change(n);
         for (int i=0;i<n;i++) {
             cin >> arr[i];
         }
+        for (int i=0;i<n;i++) {
+            cin >> change[i];
+        }
+        if (k%2==0) {
+            cout<<maxSubArraySum(arr)<<endl;
+            continue;
+        }
+        // think clearly
+        // vector<int> breaks;
+        // for (int i=1;i<n;i++) {
+        //     if (arr[i]<0 && arr[i-1]>=0) {
+        //         breaks.push_back(i-1);
+        //     }
+        // }
+        // vector<int> blocks;
+        // int sm=0, count=0;
+        // for (int i=0;i<n;i++) {
+        //     sm+=arr[i];
+        //     if (i==breaks[count]) {
+        //         blocks.push_back(sm);
+        //         sm=0;
+        //         count++;
+        //     }
+        // }
+        // blocks.push_back(sm);
+        // vector <int> b = arr;
+        // int mx=maxSubArraySum(arr);
+        // // smartify THIS
+        // for (int i=0;i<n;i++) {
+        //     b[i] += change[i];
+        //     if (maxSubArraySum(b)>mx) {
+        //         mx = maxSubArraySum(b);
+        //     }
+        //     b[i]-=change[i];
+        // }
+        // cout<<mx<<endl;
+        int curr = arr[0];
+        int best = arr[0];
+        for(int i = 1; i < arr.size(); i++) {
+            curr = max(arr[i], curr + arr[i]);
+            best = max(best, curr);
+        }
+        // i want a value for each index to surpass means added.
+        // TOO COMPLICATED out of MY LEAGUE for 20 minutes remaining...
     }
     return 0;
 }
