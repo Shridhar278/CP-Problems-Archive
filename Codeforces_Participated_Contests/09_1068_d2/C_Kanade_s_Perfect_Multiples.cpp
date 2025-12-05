@@ -9,13 +9,7 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// WILL USE A CUSTOM TREE
-
-struct Node {
-    int val;
-    vector<Node*> children;
-    Node(int v) : val(v) {}
-};
+// ??????????????
 
 int32_t main() {
     fast_io();
@@ -44,13 +38,8 @@ int32_t main() {
         //         b.push_back(i);
         //     }
         // }
-        vector<int> a;
-        for (int i=0;i<n;i++) {
-            int x; cin >> x;
-            a.push_back(x);
-        }
-        sort(a.begin(), a.end());
-        vector<int> b;
+
     }
+    
     return 0;
 }
