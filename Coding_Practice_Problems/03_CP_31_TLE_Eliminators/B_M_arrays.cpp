@@ -26,7 +26,7 @@ int32_t main() {
             if ((i==0 || (k%2==0 && i==k/2)) && modk[i]!=0) { // mod 0 , mod k (2k) and atlest one ele rqr.
                 count++;
                 continue;
-            } else if (i!=0) { // cuz. 0 mod k can go to modk[k-i]->modk[k] #issues // covers everything but 0 mod k
+            } else if (i!=0) { // cuz. 0 mod k can go to modk[k-i]->modk[k] #issues // covers every other
                 int extras = max(modk[i], modk[k-i])-min(modk[i], modk[k-i]);
                 if (modk[i]!=0||modk[k-i]!=0) {
                     count++;
