@@ -23,6 +23,9 @@ inline void fast_io() {
 /* this freaking question took me 8 hours to literally UNDERSTAND what is being asked,
  why can't they just state it more clearly !!! */
 
+ // ist power of 2 Magneficio every small stuff 
+ // can be added together for a big stuff hence, optimization possible 
+
 int32_t main() {
     fast_io();
     int test, num;
