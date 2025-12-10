@@ -58,7 +58,31 @@ int32_t main() {
             rects[ilogb(ele)]+=INF;
         }
         sort(rects.begin(), rects.end());
-        
+        int max_count = rects.front()/INF;
+        vector<int> steps = {0};
+        int curr_max = max_count;
+        for (int i=0;i<20;i++) {
+            if (rects[i]/INF == curr_max) {
+                steps[steps.size()-1]+=(int)pow(2, rects[i]%INF);
+            } else {
+                for (int j=1;j<curr_max-rects[i]/INF;j++) {
+                    steps.push_back(steps.back());
+                }
+                steps.push_back(steps.back()+(int)pow(2, rects[i]%INF));
+                curr_max=rects[i]/INF;
+                if (rects[i]/INF==0) {
+                    break;
+                }
+            }
+        }
+        int reduced_max = max_count;
+        for(;reduced_max>1;reduced_max--) {
+            space -= steps[max_count-reduced_max];
+            if (space < 0) {
+                break;
+            }
+        }
+        cout<<max_count<<endl;
     }
     return 0;
 }
