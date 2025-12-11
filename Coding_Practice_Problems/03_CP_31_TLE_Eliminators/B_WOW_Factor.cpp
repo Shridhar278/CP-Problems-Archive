@@ -10,6 +10,9 @@ inline void fast_io() {
 }
 
 // First SUBMISSION does IT submitted once and submitted the PERFECTO CODE
+// ez. code cuz. i derived the formula for RECURSION of "carry"
+
+// OR later on study DYNAMIC PROGRAMMING makes this child's play
 
 int32_t main() {
     fast_io();
