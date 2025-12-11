@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// SEE editorial //it's crazy
+
 int32_t main() {
     fast_io();
     int test;
