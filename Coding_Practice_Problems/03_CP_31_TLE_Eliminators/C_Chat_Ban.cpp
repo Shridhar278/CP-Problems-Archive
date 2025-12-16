@@ -9,13 +9,27 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-void solve(int k, int x) {
-    //out of bounds
-    if (x >= k*k) {
+// just an O(1)
+// FIND formula achieved
+// PERFECT formula GOT IT
+
+// hmmmm..... think 'bout it
+
+// other APPROACH think...
+void math_solve(int k, int x) {
+    if (x > k*k) {
+        //out of bounds
         cout<<2*k-1<<endl;
-        return;
-    } else if (x >= k*(k+1)/2) {
-        
+    } else if (x > k*(k+1)/2) {
+        // decrease
+        x = k*k-x;
+        int ans = 2*k - 1 - floor((sqrt(1+8*x)-1)/2);
+         // approximational ERRORS ? // not good for big vals
+        cout<<ans<<endl;
+    } else {
+        // increase
+        int ans = ceil((sqrt(1+8*x)-1)/2);
+        cout<<ans<<endl;
     }
 }
 
@@ -25,7 +39,7 @@ int32_t main() {
     cin >> test;
     while (test--) {
         int k, x; cin >> k >> x;
-        solve(k, x);
+        math_solve(k, x);
     }
     return 0;
 }
