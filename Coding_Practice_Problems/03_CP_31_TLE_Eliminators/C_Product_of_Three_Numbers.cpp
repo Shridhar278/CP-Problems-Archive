@@ -11,8 +11,25 @@ inline void fast_io() {
 
 void solve() {
     int n; cin >> n;
-    for (int i=2;i<=sqrt(n);i++) {
-        
+    int none = 1;
+    int i, j, new_n;
+    for (i=2;i<sqrt(n);i++) { // equal to srqt remove
+        if (n%i==0) {
+            new_n=n/i;
+            for (j=i+1;j<sqrt(new_n);j++) {
+                if (new_n%j==0) {
+                    none=0;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    if (none) {
+        cout<<"NO"<<endl;
+    } else {
+        cout<<"YES"<<endl;
+        cout<<i<<" "<<j<<" "<<new_n/j<<endl;
     }
 }
 
