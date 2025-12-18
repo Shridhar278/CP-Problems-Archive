@@ -9,21 +9,25 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-void solve() {
-    
+void solve(int n, int k, vector<int> arr) {
+    int i=0;
+    while (i+1<=k) {
+        if (i+1==k) {
+            cout<<"YES"<<endl;
+            return;
+        }
+        i+=arr[i];
+    }
+    cout<<"NO"<<endl;
 }
 
 int32_t main() {
     fast_io();
-    int test;
-    cin >> test;
-    while (test--) {
-        int n, k; cin >> n >> k;
-        vector<int> arr(n);
-        for (int i=0;i<n;i++) {
-            cin >> arr[i];
-        }
-        solve();
+    int n, k; cin >> n >> k;
+    vector<int> arr(n);
+    for (int i=0;i<n;i++) {
+        cin >> arr[i];
     }
+    solve(n, k, arr);
     return 0;
 }
