@@ -9,7 +9,7 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// no. of hints = 
+// WILL WATCH solution
 
 void solve() {
     int n; cin >> n;
