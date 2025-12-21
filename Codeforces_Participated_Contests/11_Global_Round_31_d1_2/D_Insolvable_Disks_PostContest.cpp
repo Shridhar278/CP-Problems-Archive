@@ -10,19 +10,8 @@ inline void fast_io() {
 }
 
 void solve(int n, vector<int> disk) {
-    int last=-INF;
-    int curr;
-    int count=0;
-    for (int i=1;i<n;i++) {
-        curr=disk[i]-disk[i-1];
-        if (curr >= last) {
-            last=curr;
-            count++;
-        } else {
-            last = -INF;
-        }
-    }
-    cout<<count<<endl;
+    // may be out OF my league RIGHT NOW est. 1700-1800
+    
 }
 
 int32_t main() {
