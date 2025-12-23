@@ -9,15 +9,9 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// WILL WATCH solution
-
 void solve() {
-    int n; cin >> n;
-    vector<int> glasses(n);
-    for (int i=0;i<n;i++) {
-        cin >> glasses[i];
-    }
-
+    int k, x; cin >> k >> x;
+    cout<<k*x+1<<endl; 
 }
 
 int32_t main() {
