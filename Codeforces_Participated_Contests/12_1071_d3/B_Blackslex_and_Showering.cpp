@@ -20,7 +20,7 @@ void solve() {
         if (i!=0) {
             diff += abs(arr[i]-arr[i-1]);
         }
-        // can shorten this code
+        // can shorten this code NEVERMIND be happy with SIMPLICITY
         if (i==0) {
             if (abs(arr[0]-arr[1]) > change) {
                 change = abs(arr[0]-arr[1]);

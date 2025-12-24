@@ -31,6 +31,9 @@ void solve() {
     } else {
         cout<<least1<<endl;
     }
+    // EDITORIAL : just use
+    // cout<<max(least2-least1, least1)<<endl;
+    // this is O(n), could have SORTED array for SHORTER but SLOWER CODE O(nlogn)
 }
 
 int32_t main() {
