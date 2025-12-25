@@ -13,6 +13,8 @@ inline void fast_io() {
 // still do NOT perfectly get WHY it works
 // read EDITORIALs
 
+// KIND of JUGAADU code
+
 void solve() {
     int n, x, y; cin >> n >> x >> y;
     string s;

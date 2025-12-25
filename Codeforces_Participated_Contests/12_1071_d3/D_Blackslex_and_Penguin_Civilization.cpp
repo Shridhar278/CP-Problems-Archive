@@ -22,6 +22,7 @@ void solve() {
 
     // the pre ZERO phase
     for (int bits=n;bits>=1;bits--) {
+        // will lose POTENTIAL bits one by one while MACIMIZING score
         if (bits==n) {
             cout<<(1<<n)-1<<" ";
         } else {
@@ -38,6 +39,17 @@ void solve() {
     for (int i=2;i<(1<<n);i++) {
         if (i%2==0) {
             cout<<i<<" ";
+        }
+    }
+    cout<<endl;
+    
+    //POST editorial : SHORTER VERSION : more COMPLETE
+    // everything COMES under GENERAL CASE
+    for (int bits=n;bits>=0;bits--) { 
+        for (int count=0;count<(1<<n-bits);count++) {
+            if (count%2==0) {
+                cout<<(count<<bits)+(1<<bits)-1<<" ";
+            }
         }
     }
     cout<<endl;
