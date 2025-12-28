@@ -9,6 +9,10 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// covering petty cases
+// OR better started with 's' at the corners
+// and GENERAL GRIND
+
 void solve() {
     string str;
     cin >> str;

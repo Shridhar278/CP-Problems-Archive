@@ -35,6 +35,8 @@ void solve() {
                 head=tail;
                 tail++;
             } else if (arr[tail] == 0) {
+                X+=arr[head];
+                head=tail;
                 tail++;
             } else {
                 if (that_one<head) {
