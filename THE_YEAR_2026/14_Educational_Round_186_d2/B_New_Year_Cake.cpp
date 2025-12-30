@@ -10,6 +10,7 @@ inline void fast_io() {
 }
 
 // LOOKout Tutorial
+// my solution IS EXTREMELY OPTIMIZED
 
 void solve() {
     int a, b; cin >> a >> b;
@@ -34,3 +35,4 @@ int32_t main() {
     }
     return 0;
 }
+

@@ -9,6 +9,9 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// cutting THE CRAP post EDITORIAL
+// PS: its very optimized byee
+
 void solve() {
     int n; cin >> n;
     vector<int> a(n);
@@ -55,6 +58,15 @@ void solve() {
     // 2 3 2
     // 3 0 3
     // cycles of 3
+
+    //post EDITORIAL
+    // vector<int> a(n);
+    // vector<int> b(n);
+    // vector<int> c(n);
+    // for (int i=0;i<n;i++) cin >> a[i];
+    // for (int i=0;i<n;i++) cin >> b[i];
+    // for (int i=0;i<n;i++) cin >> c[i];
+    // kinda looks neat
 }
 
 int32_t main() {

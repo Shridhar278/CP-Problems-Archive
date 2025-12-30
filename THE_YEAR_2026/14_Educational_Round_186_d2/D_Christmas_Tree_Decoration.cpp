@@ -27,6 +27,7 @@ int nCr(int n, int r) {
 }
 
 // F off i don't CARE let's SEE where it is
+// go to the other .cpp
 
 void solve() {
     int n; cin >> n;
