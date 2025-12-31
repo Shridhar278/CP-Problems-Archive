@@ -10,6 +10,10 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+/*LESSONS LEARNT
+use double where dividing among INTs (instaead of float if you want to be HAPPY
+use round() instead of int() to again be happy)*/
+
 int factorial(int n) {
     if (n==0) {
         return 1;
@@ -18,12 +22,13 @@ int factorial(int n) {
     }
 }
 
+// some IMPROVEMENTS later... best = 56C28 works for that AFTER that DEATH
 int nCr(int n, int r) {
-    float ans=1;
-    for (float x=n;x>n-r;x--) {
+    double ans=1;
+    for (double x=n;x>n-r;x--) {
         ans=((ans*x)/(n+1-x));
     }
-    return ((int)ans)%modi;
+    return ((int)round(ans))%modi;
 }
 
 // F off i don't CARE let's SEE where it is

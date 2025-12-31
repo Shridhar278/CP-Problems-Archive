@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// mehH
+
 void solve() {
     int n; cin >> n;
     // int prod = 1;
