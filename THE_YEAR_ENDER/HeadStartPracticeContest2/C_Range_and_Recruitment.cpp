@@ -9,7 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// BIZARRE error ON one CHECK IT.. plz
+// fixed best = 1 initialization
+// at best = 0 glitches ON n=1;
 
 void solve() {
     int n; cin >> n;
@@ -18,14 +19,14 @@ void solve() {
         cin >> arr[i];
     }
     sort(arr.begin(), arr.end());
-    int st=0, ed=0, best=1;
-    for (;ed<n;) {
+    int st=0, ed, best=1;
+    for (ed=1;ed<n;ed++) {
         if (arr[ed]-arr[st]>5) {
             st++;
+            ed--;
             continue;
         }
         best = max(best, ed-st+1);
-        ed++;
     }
     cout<<best<<endl;
 }
