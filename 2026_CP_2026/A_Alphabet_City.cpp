@@ -9,8 +9,10 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// # SOLVED let's GO
+// good night
+
 void solve() {
-    cout<<1<<endl;
     int n, m; cin >> n >> m;
     vector<string> streets;
     string s;
@@ -25,9 +27,18 @@ void solve() {
         }
     }
     for (int l=0;l<n;l++) {
-        int best_so_far=-1;
+        int best_so_far=m;
         for (int alpha=0;alpha<26;alpha++) {
-            best_so_far = min((m*total_assets[alpha]-assets[l][alpha])/assets[l][alpha], best_so_far);
+            if (m*(total_assets[alpha]-assets[l][alpha])<=assets[l][alpha]) {
+                if (assets[l][alpha]==0) {
+                    continue;
+                } else {
+                    best_so_far=-1;
+                    break;
+                }
+            }
+            best_so_far = min((m*(total_assets[alpha]-assets[l][alpha])-assets[l][alpha])/
+                              (total_assets[alpha]-assets[l][alpha]), best_so_far);
         }
         if (best_so_far>=0) {
             cout<<best_so_far<<" ";
