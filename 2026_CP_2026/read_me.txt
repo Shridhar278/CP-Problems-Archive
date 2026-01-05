@@ -1,0 +1,1 @@
+B_XOR_Array.cpp ON STAND-BY a MONStrous ATTEMPt on the way
