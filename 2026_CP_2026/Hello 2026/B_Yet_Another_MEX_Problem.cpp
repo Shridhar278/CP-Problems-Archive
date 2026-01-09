@@ -44,7 +44,7 @@ void solve() {
     int curr_mex = mex(arr, k, n), curr_max = maxi(arr, k);
     for (int i=0;i<n-k+1;i++) {
         if (curr_max < curr_mex) {
-            if (arr[i+k])
+            if (arr[i+k]);
         }
     }
 }

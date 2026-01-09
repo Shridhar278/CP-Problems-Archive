@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define int long long
-#define INF (int)(1e9+7)
+#define MOD (int)(1e9+7)
 #define EPS (double)1e-9
 
 inline void fast_io() {
@@ -9,30 +9,32 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// ez. DUB
+// COMPLETELY theoretical PHP
 
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k;
     vector<int> arr(n);
-    int x=0;
+    vector<int> nums(n+1, 0);
     for (int i=0;i<n;i++) {
         cin >> arr[i];
-        if (i==0 or i==n-1) {
-            if (arr[i]==1) {
-                x++;
-            }
+        nums[arr[i]]++;
+    }
+    int i=0;
+    for (;i<k;i++) {
+        if (nums[i]==0) {
+            break;
         }
     }
-    if (x > 0) {
-        cout<<"Alice"<<endl;
+    if (i==k) {
+        cout<<k-1<<endl;
     } else {
-        cout<<"Bob"<<endl;
+        cout<<i<<endl;
     }
 }
 
 int32_t main() {
     fast_io();
-    int test;
+    int test;  
     cin >> test;
     while (test--) {
         solve();
