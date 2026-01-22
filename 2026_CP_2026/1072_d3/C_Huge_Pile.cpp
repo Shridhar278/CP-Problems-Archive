@@ -10,6 +10,8 @@ inline void fast_io() {
 }
 
 // elegant
+// this and the solution with x=x/2 continously
+// are identical cuz. binary representation.
 
 void solve() {
     int n, k; cin >> n >> k;

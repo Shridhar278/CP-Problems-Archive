@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// logic error
+
 void solve() {
     int n, k; cin >> n >> k;
     vector<int> seq={1, 2, 4};
