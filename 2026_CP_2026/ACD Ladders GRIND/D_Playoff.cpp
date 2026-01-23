@@ -9,6 +9,10 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// an algo always EXISTS
+// feel it MOVE ON
+// PROOF later ON tackle
+
 void solve() {
     int n; cin >> n;
     string fixing; 
