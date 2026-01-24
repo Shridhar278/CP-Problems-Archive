@@ -22,7 +22,10 @@ void solve() {
     vector<vector<int>> relations;
     // sub-sets
     // graphs
-    
+    // can avoid graphs IG
+    // its CLASSIC for some reason
+
+    // STUDY inversion COUNTING
 }
 
 int32_t main() {
