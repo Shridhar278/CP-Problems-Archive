@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// TLE inviting code
+
 void solve() {
     int n, m; cin >> n >> m;
     vector<int> ops(m);
