@@ -9,6 +9,10 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// A line Away from Perfection
+
+// Most mistakes hapenning cuz. i can't implement my ideas clearly
+
 void solve() {
     int n; cin >> n;
     vector<int> arr(n);
@@ -24,11 +28,13 @@ void solve() {
         if (arr[i]%3==0) {
             chances++;
         }
-        while (arr[i]%4==0) {
-            arr[i]/=4;
-        }
-        if (arr[i]%2==0) {
-            scope++;
+        if (arr[i]%4==0) {
+            while (arr[i]%4==0) {
+                arr[i]/=4;
+            }
+            if (arr[i]%2==0) {
+                scope++;
+            }
         }
         if (arr[i]%5==0) {
             chances++;
