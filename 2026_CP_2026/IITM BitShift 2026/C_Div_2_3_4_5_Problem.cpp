@@ -9,9 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// A line Away from Perfection
-
-// Most mistakes hapenning cuz. i can't implement my ideas clearly
+// CRAZY question
+// SOUNDS interesting but RAGEBAIT
 
 void solve() {
     int n; cin >> n;
@@ -34,6 +33,7 @@ void solve() {
             }
             if (arr[i]%2==0) {
                 scope++;
+                chances--;
             }
         }
         if (arr[i]%5==0) {
@@ -44,23 +44,19 @@ void solve() {
         cout<<"NO"<<endl;
         return;
     } else {
-        if ((chances)%2==1) {
-            if (scope==0 or scope%2==1) {
-                cout<<"YES"<<endl;
-                return;
-            } else {
-                cout<<"NO"<<endl;
-                return; 
-            }
+        if (scope%2==1) {
+            cout<<"YES"<<endl;
+            return;
         } else {
-            if (scope==0 or scope%2==0) {
-                cout<<"NO"<<endl;
-                return;
-            } else {
-                cout<<"YES"<<endl;
-                return;  
-            }
+            // stalling
+            chances+=scope;
         }
+        if (chances%2==1) {
+            cout<<"YES"<<endl;
+        } else {
+            cout<<"NO"<<endl;
+        }
+        return;
     }
 }
 
