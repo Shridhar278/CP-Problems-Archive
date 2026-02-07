@@ -10,13 +10,30 @@ inline void fast_io() {
 }
 
 // CODE : BLANK
+// ACCEPTED
 
 void solve() {
     int n; cin >> n;
     vector<int> arr(n);
+    int maxi=-MOD, mini=MOD;
     for (int i=0;i<n;i++) {
         cin >> arr[i];
+        maxi = max(arr[i], maxi);
+        mini = min(arr[i], mini);
     }
+    vector<int> sorted=arr;
+    int best=MOD;
+    sort(sorted.begin(), sorted.end());
+    for (int i=0;i<n;i++) {
+        int x = abs(arr[i]-mini), y = abs(arr[i]-maxi);
+        if (sorted[i]!=arr[i]) {
+            best = min(best, max(x, y));
+        }
+    }
+    if (best==MOD or best < 1) {
+        best=-1;
+    }
+    cout<<best<<endl;
 }
 
 int32_t main() {
