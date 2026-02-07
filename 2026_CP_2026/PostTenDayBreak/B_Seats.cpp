@@ -9,13 +9,23 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// numero SIX
-// feels MONStROUSLY HARD
-
-// PASS there should always be scope
+// lot of EDGE cases AUTO-COMPLETE
 
 void solve() {
-       
+    int n; cin >> n;
+    string s; cin >> s;
+    int ttl=0, curr=1;
+    for (int i=0;i<n;i++) {
+        if (s[i]=='1') {
+            ttl+=curr/3;
+            curr=0;
+            ttl++;
+        } else {
+            curr++;
+        }
+    }
+    ttl+=(curr+1)/3;
+    cout<<ttl<<endl;
 }
 
 int32_t main() {

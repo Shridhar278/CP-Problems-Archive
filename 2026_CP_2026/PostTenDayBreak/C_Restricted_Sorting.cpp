@@ -9,13 +9,14 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// numero SIX
-// feels MONStROUSLY HARD
-
-// PASS there should always be scope
+// CODE : BLANK
 
 void solve() {
-       
+    int n; cin >> n;
+    vector<int> arr(n);
+    for (int i=0;i<n;i++) {
+        cin >> arr[i];
+    }
 }
 
 int32_t main() {

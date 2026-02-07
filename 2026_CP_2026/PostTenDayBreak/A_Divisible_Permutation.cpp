@@ -9,13 +9,22 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// numero SIX
-// feels MONStROUSLY HARD
-
-// PASS there should always be scope
-
 void solve() {
-       
+    int n; cin >> n;
+    int x=n;
+    vector<int> arr={n};
+    for (int i=n-1;i>0;i--) {
+        if ((n-i)%2==1) {
+            x-=i;
+        } else {
+            x+=i;
+        }
+        arr.push_back(x);
+    }
+    for (int i=n-1;i>=0;i--) {
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
 }
 
 int32_t main() {
