@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// SIMPLE observation for SWAP
+
 void solve() {
     int n; cin >> n;
     vector<int> arr(n);

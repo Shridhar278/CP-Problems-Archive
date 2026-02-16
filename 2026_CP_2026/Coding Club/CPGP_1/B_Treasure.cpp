@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// simple SIMULATION
+
 void solve() {
     int n; cin >> n;
     vector<int> arr(n+1);

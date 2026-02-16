@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// Linear Algebra
+
 void solve() {
     int n; cin >> n;
     // first n-2

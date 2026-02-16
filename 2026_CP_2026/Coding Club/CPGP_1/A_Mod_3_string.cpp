@@ -9,6 +9,8 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// ez. div. by 11 COPY
+
 void solve() {
     int n; cin >> n;
     string s; cin >> s;
