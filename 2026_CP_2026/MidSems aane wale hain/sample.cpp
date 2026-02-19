@@ -27,6 +27,7 @@ template<class T> void _print(vector<T> v) {
         cout << " ";
     }
     cout << "]";
+    cout<<endl;
 }
 template<class T> void _print(map<T, T> v) {
     cout << "[ ";
@@ -38,15 +39,17 @@ template<class T> void _print(map<T, T> v) {
         cout << " }";
     }
     cout << "]";
+    cout<<endl;
 }
 
 #define debug(x) \
    do { \
-        if (check) \
+        if (check) {\
             cout<<#x<<" = "; _print(x); \
+        } \
     } while(0)
 
-#define loop(i, n) for(int i=0;i<n;i++)
+#define loop(k, n) for(int i=k;i<n;i++)
 #define precise(x) cout << fixed << setprecision(x)
 #define vi vector<int>
 #define vvi vector<vector<int>>
@@ -67,10 +70,7 @@ inline void fast_io() {
 
 #define check 1
 void solve() {
-    vector<int> v = {1, 2, 3, 4, 5};
-    map m = {{1, 2}, {3, 4}, {5, 6}};
-    debug(v);el;
-    debug(m);el;
+
 }
 
 int32_t main() {
