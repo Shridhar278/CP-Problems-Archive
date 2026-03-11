@@ -69,6 +69,8 @@ inline void fast_io() {
 // just getting back to why does it feel right everytime i let you in
 // why does it feel like i can tell you anything
 
+// provable optimal solution
+
 #define check 1
 void solve() {
     int n; cin >> n;
