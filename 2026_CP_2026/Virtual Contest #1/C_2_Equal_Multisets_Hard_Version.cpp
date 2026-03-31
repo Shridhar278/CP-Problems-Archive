@@ -69,6 +69,10 @@ inline void fast_io() {
 // missing A case
 // WILL DO POST-martum TIRED AS HELL so far
 
+// mysterIO
+
+// will REMAIN as a SCAR
+
 #define check 1
 void solve() {
     int n, k; cin >> n >> k;
@@ -90,17 +94,16 @@ void solve() {
             if (vary[i+k]>0 and arr[i+k]!=vary[i+k] and arr[i]==arr[i+k]) {
                 if (vary[i]<0) {
                     vary[i]=vary[i+k];
-                    appends.erase(i+appends.begin());
+                    appends.erase(find(appends.begin(), appends.end(), i));
                     exists[vary[i+k]]++;
+                    continue;
                 }
             }
         }
-    }
-    loop(0, k) {
         if (vary[i]<0 and exists[arr[i]]<wants[arr[i]]) {
             vary[i]=arr[i];
             exists[vary[i]]++;
-            appends.erase(i+appends.begin());
+            appends.erase(find(appends.begin(), appends.end(), i));
         } 
     }
     loop(0, k) {
