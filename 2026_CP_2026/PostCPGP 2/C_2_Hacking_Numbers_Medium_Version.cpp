@@ -66,9 +66,31 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// respect++
+
+// solved with HINTS but beautifull WAY of narrowing DOWN
+// Waah!
+
 #define check 1
 void solve() {
-
+    // smart div. by 9
+    // if div.by 9
+    // sum of digits <=89
+    // sum of sum of digits <=17
+    // HENCE, MUST BE 9!!!!!!!!!
+    // super smart
+    int n; cin >> n;
+    int res;
+    cout<<"mul 9"<<endl;
+    cin >> res;
+    cout<<"digit"<<endl;
+    cin>>res;
+    cout<<"digit"<<endl;
+    cin>>res;
+    cout<<"add "<<n-9<<endl;
+    cin>>res;
+    cout<<"!"<<endl;
+    cin>>res;
 }
 
 int32_t main() {
