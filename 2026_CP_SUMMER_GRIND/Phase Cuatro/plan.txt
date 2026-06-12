@@ -1,3 +1,5 @@
 the CONTEST review A&B&C&D
 2172 F : F_Cluster_Computing_System.cpp ON HOLD : minimum spanning tree etc.
 POTD F_Dasha_and_Nightmares.cpp SKIP : hashing
+
+POTD 2123D : BRAIN FADE screw it I AM NOT DOING IT
