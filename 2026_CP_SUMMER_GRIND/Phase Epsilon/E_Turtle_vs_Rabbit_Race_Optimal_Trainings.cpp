@@ -69,7 +69,24 @@ inline void fast_io() {
 #define check 1
 void solve() {
     int n; cin >> n;
-    
+    vi arr(n+1); loop(1, n+1) cin >> arr[i];
+    vi prefix(n+1); prefix[0] = 0;
+    loop(1, n+1) {
+        prefix[i]=prefix[i-1]+arr[i];
+    }
+    int q; cin >> q;
+    int l, u;
+    for (int i=0;i<q;i++) {
+        cin >> l >> u;
+        auto it = lower_bound(prefix.begin()+l-1, prefix.end(), u+prefix[l-1]);
+        if (*it>u+prefix[l-1]) {
+            if (*(it)-u-prefix[l-1]>arr[min((int)(it-prefix.begin()), n)]/2) { 
+                it--;
+            }
+        }
+        cout<<(int)min(n, max((int)(it-prefix.begin()), l))<<" ";
+    }
+    cout<<endl;
 }
 
 int32_t main() {

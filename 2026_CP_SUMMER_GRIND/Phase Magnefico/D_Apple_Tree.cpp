@@ -66,27 +66,60 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+
+#define check 0
 void solve() {
-    int n, h; cin >> n >> h;
-    vi arr(n); loop(0, n) cin >> arr[i];
-    vi diffs;
-
-    for (int i=0;i<n-1;i++) {
-        diffs.push_back(arr[i+1]-arr[i]);
+    int n; cin >> n;
+    vvi adj(n+1);
+    int x, y;
+    loop(0, n-1) {
+        cin >> x >> y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
     }
-    sort(diffs.begin(), diffs.end());
+    
+    int a=0, b=0;
+    vi leafs(n+1, 0);
 
-    int total=0;
-    for (int x=0;x<n-1;x++) {
-        if (total+(n-x)*diffs[x]<h) {
-            total+=diffs[x];
+    vi visited(n+1, 0);
+    queue<int> q;
+    for (int i=1;i<=n;i++) {
+        if (adj[i].size()==1 and i!=1) {
+            q.push(i);
+        }
+        if (i==1) {
+            visited[i]=(int)adj[i].size();
         } else {
-            cout<<((h-total+n-x-1)/(n-x))<<endl;
-            return;
+            visited[i]=(int)adj[i].size()-1;
         }
     }
-    cout<<h-total<<endl;
+
+    while(!q.empty()) {
+        int curr = q.front();
+        q.pop();
+        if (visited[curr]!=0) {
+            continue;
+        }
+        
+        int ans=0;
+        for (auto ele : adj[curr]) {
+            if (visited[ele]!=0) {
+                visited[ele]--;
+                if (visited[ele]==0) q.push(ele);
+            } else {
+                ans+=leafs[ele];
+            }
+        }
+
+        leafs[curr]=max(ans, (int)1);
+        debug(leafs)
+    }
+
+    int que; cin >> que;
+    for (int i=0;i<que;i++) {
+        cin >> x >> y;
+        cout<<leafs[x]*leafs[y]<<endl;
+    }
 }
 
 int32_t main() {

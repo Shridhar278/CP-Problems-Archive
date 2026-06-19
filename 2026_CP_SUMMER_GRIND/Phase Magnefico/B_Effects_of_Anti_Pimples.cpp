@@ -28,6 +28,14 @@ template<class T> void _print(vector<T> v) {
     }
     cout << "]";
 }
+template<class T> void _print(set<T> v) {
+    cout << "{ ";
+    for (auto i : v) {
+        _print(i);
+        cout << " ";
+    }
+    cout << "}";
+}
 template<class T> void _print(map<T, T> v) {
     cout << "[ ";
     for (auto [i, j] : v) {
@@ -66,35 +74,88 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
-void solve() {
-    int n, h; cin >> n >> h;
-    vi arr(n); loop(0, n) cin >> arr[i];
-    vi diffs;
-
-    for (int i=0;i<n-1;i++) {
-        diffs.push_back(arr[i+1]-arr[i]);
-    }
-    sort(diffs.begin(), diffs.end());
-
-    int total=0;
-    for (int x=0;x<n-1;x++) {
-        if (total+(n-x)*diffs[x]<h) {
-            total+=diffs[x];
-        } else {
-            cout<<((h-total+n-x-1)/(n-x))<<endl;
-            return;
+int fastexp(int base, int exp) {
+    int result = 1;
+    while (exp > 0) {
+        if (exp & 1) { // Check if the current bit is set
+            result *= base;
+            result%=mod9;
         }
+        base *= base; // Square the base
+        base%=mod9;
+        
+        exp >>= 1; // Right shift the exponent
     }
-    cout<<h-total<<endl;
+    return result;
+}
+
+#define check 0
+void solve() {
+    int n; cin >> n;
+    vvi arrs(n);
+    vi arr(n+1);
+    int x;
+    for(int i=0;i<n;i++) {
+        cin >> x;
+        arrs[i]=vi({x, i+1});
+        arr[i+1]=x;
+    }
+
+    sort(arrs.begin(), arrs.end(), greater<>());
+
+    int alpha = 0;
+    int result=0;
+    set<int> used;
+    debug(arrs)
+    for (int i=0;i<n;i++) {
+        int ele = arrs[i][1];
+        if (used.count(ele)) {
+            continue;
+        }
+        int pre = n-(int)used.size();
+        int facts = 0;
+        for (int j=1;j*j<=ele;j++) {
+            if (ele%j==0) {
+                if (!used.count(j)) {
+                    used.insert(j);
+                    facts++;
+                }
+                if (!used.count(ele/j)) {
+                    used.insert(ele/j);
+                    facts++;
+                }
+            }
+        }
+        // add (2^facts-1)
+        pre-=facts;
+
+        debug(pre)
+        debug(facts)
+
+        int x;
+        x=fastexp(2, pre);
+        x%=mod9;
+        x*=fastexp(2, facts)-1; 
+        x%=mod9;
+        
+        alpha+=x;
+        debug(x)
+
+        x*=arrs[i][0];
+        x%=mod9;
+        result+=x;
+
+        result%=mod9;
+        debug(result)
+        debug(alpha)
+        debug(used)
+    }
+
+    cout<<result<<endl;
 }
 
 int32_t main() {
     fast_io();
-    int test;
-    cin >> test;
-    while (test--) {
-        solve();
-    }
+    solve();
     return 0;
 }

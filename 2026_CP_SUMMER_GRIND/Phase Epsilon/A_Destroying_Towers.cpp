@@ -68,25 +68,15 @@ inline void fast_io() {
 
 #define check 1
 void solve() {
-    int n, h; cin >> n >> h;
+    int n; cin >> n;
     vi arr(n); loop(0, n) cin >> arr[i];
-    vi diffs;
-
-    for (int i=0;i<n-1;i++) {
-        diffs.push_back(arr[i+1]-arr[i]);
+    int mini=INF;
+    int score=0;
+    for (int i=0;i<n;i++) {
+        mini = min(arr[i], mini);
+        score+=mini;
     }
-    sort(diffs.begin(), diffs.end());
-
-    int total=0;
-    for (int x=0;x<n-1;x++) {
-        if (total+(n-x)*diffs[x]<h) {
-            total+=diffs[x];
-        } else {
-            cout<<((h-total+n-x-1)/(n-x))<<endl;
-            return;
-        }
-    }
-    cout<<h-total<<endl;
+    cout<<score<<endl;
 }
 
 int32_t main() {
