@@ -66,10 +66,17 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// will DO
+
 #define check 1
 void solve() {
-    // analysis in THE MORNING
-    // new PROBLEMS in THE NIGHT
+    int n; cin >> n;
+    vi c(n); loop(0, n) cin >> c[i];
+    vi a(n); loop(0, n) cin >> a[i];
+    vi b(n); loop(0, n) cin >> b[i];
+
+    // simple-backtrackking
+    // then DPs
 }
 
 int32_t main() {
