@@ -66,6 +66,9 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
+// frikkin O(1) solution
+// screw O(logn) common sense
+
 #define check 0
 void solve() {
     int n, k; cin >> n >> k;
