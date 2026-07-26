@@ -75,73 +75,55 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// check this
+// hold on
 
 #define check 1
-bool checker(vi count, vi aval, int n) {
-    int i=0;
-    int backs=0;
-    while(n>0) {
-        if (backs) {
-            if (count[i]) {
-                aval[i]--;
-                count[i]=0;
-                backs=0;
-            } else {
-                count[i]=1;
-            }
-        }
-        if (n%2 && !count[i]) {
-            for(int j=i;j<61;j++) {
-                if (!aval[j]) {
-                    break;
-                }
-                if (count[j]) {
-                    backs=1;
-                    break;
-                }
-            }
-            if (!backs) {
-                return false;
-            }
-        }
-        n/=2;
-        i++;
-    }
-    return true;
-}
-
 void solve() {
     int n; cin >> n;
-    vi aval(61);
-    vi count(61);
-    int x, y;
+    // 0 0 -1 0 1 2 2 4
+    // 0 1  1 2 3 4 5 5
+
+    vi arr(n); loop(0, n) cin >> arr[i];
+    vvi ranges(n, vi(2));
     loop(0, n) {
-        cin >> x >> y;
-        if (x==1) {
-            count[y]++;
-            aval[y]++;
-            loop(y, 60) {
-                if (count[i]==2) {
-                    count[i]=0;
-                    count[i+1]++;
-                    aval[i+1]++;
-                } else {
-                    break;
-                }
-            }
-        } else {
-            if (checker(count, aval, y)) {
-                yes;
-            } else {
-                no;
-            }
-        }
+        cin >> ranges[i][0] >> ranges[i][1];
     }
+    // given allocate
+    // 0 1 2 0
+    // 4 2 4 3
+
+    // 0 1 2 2
+    // 2 2 3 3
+    int change=0;
+    loop(0, n) {
+        if (arr[i]==1) {
+            change++;
+        }
+        ranges[i][0]-=change;
+        ranges[i][1]-=change;
+    }
+
+    //prefix max
+    loop(1, n) {
+        ranges[i][0]=max(ranges[i-1][0],
+             ranges[i][0]);
+    }
+
+    // suffix min
+    for(int i=n-2;i>=0;i++) {
+        ranges[i][0]=min(ranges[i+1][0],
+             ranges[i][0]);
+    }    
+
+
 }
 
 int32_t main() {
     fast_io();
-    solve();
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
     return 0;
 }

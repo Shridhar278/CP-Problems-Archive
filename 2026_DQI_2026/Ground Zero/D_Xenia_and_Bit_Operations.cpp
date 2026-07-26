@@ -75,68 +75,50 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// check this
-
-#define check 1
-bool checker(vi count, vi aval, int n) {
-    int i=0;
-    int backs=0;
-    while(n>0) {
-        if (backs) {
-            if (count[i]) {
-                aval[i]--;
-                count[i]=0;
-                backs=0;
-            } else {
-                count[i]=1;
-            }
-        }
-        if (n%2 && !count[i]) {
-            for(int j=i;j<61;j++) {
-                if (!aval[j]) {
-                    break;
-                }
-                if (count[j]) {
-                    backs=1;
-                    break;
-                }
-            }
-            if (!backs) {
-                return false;
-            }
-        }
-        n/=2;
-        i++;
+int opr(int stg, int x, int y) {
+    if (stg%2) {
+        return x|y;
+    } else {
+        return x^y;
     }
-    return true;
 }
 
+void generate(vi q, int n, vvi& tree) {
+    int idx=q[0]-1;
+    tree[0][idx]=q[1];
+    loop(1, n+1) {
+        tree[i][idx/2]=opr(i, tree[i-1][idx],
+             tree[i-1][idx+1-2*(idx%2)]);
+        idx/=2;
+    }
+}
+
+#define check 1
 void solve() {
-    int n; cin >> n;
-    vi aval(61);
-    vi count(61);
-    int x, y;
-    loop(0, n) {
-        cin >> x >> y;
-        if (x==1) {
-            count[y]++;
-            aval[y]++;
-            loop(y, 60) {
-                if (count[i]==2) {
-                    count[i]=0;
-                    count[i+1]++;
-                    aval[i+1]++;
-                } else {
-                    break;
-                }
-            }
-        } else {
-            if (checker(count, aval, y)) {
-                yes;
-            } else {
-                no;
-            }
+    int n, m; cin >> n >> m;
+    int l = ((int)1<<n);
+    vi arr(l); loop(0, l) cin >> arr[i];
+    vvi query(m, vi(2));
+    loop(0, m) {
+        cin >> query[i][0] >> query[i][1];
+    }
+    // __init__
+    vvi stages(n+1);
+    loop(0, l) {
+        stages[0].push_back(arr[i]);
+    }
+    // stages
+    loop(1, n+1) {
+        for(int j=0;j<(int)1<<(n-i);j++) {
+            stages[i].push_back(opr(i, stages[i-1][2*j],
+                 stages[i-1][2*j+1]));
         }
+    }
+
+    // query handling
+    loop(0, m) {
+        generate(query[i], n, stages);
+        cout<<stages[n][0]<<endl;
     }
 }
 

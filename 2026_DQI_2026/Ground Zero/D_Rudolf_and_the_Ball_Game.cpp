@@ -75,73 +75,52 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// check this
-
 #define check 1
-bool checker(vi count, vi aval, int n) {
-    int i=0;
-    int backs=0;
-    while(n>0) {
-        if (backs) {
-            if (count[i]) {
-                aval[i]--;
-                count[i]=0;
-                backs=0;
-            } else {
-                count[i]=1;
-            }
-        }
-        if (n%2 && !count[i]) {
-            for(int j=i;j<61;j++) {
-                if (!aval[j]) {
-                    break;
-                }
-                if (count[j]) {
-                    backs=1;
-                    break;
-                }
-            }
-            if (!backs) {
-                return false;
-            }
-        }
-        n/=2;
-        i++;
-    }
-    return true;
-}
-
 void solve() {
-    int n; cin >> n;
-    vi aval(61);
-    vi count(61);
-    int x, y;
-    loop(0, n) {
-        cin >> x >> y;
-        if (x==1) {
-            count[y]++;
-            aval[y]++;
-            loop(y, 60) {
-                if (count[i]==2) {
-                    count[i]=0;
-                    count[i+1]++;
-                    aval[i+1]++;
-                } else {
-                    break;
-                }
-            }
+    int n, m, x; cin >> n >> m >> x;
+    vvi throws(m, vi(2));
+    loop(0, m) {
+        char b;
+        cin >> throws[i][0] >> b;
+        if (b!='?') {
+            throws[i][1]=b-'0';
         } else {
-            if (checker(count, aval, y)) {
-                yes;
+            throws[i][1]=-1;
+        }
+    }
+    set<int> aval;
+    aval.insert((x%n));
+    loop(0, m) {
+        set<int> curr=aval;
+        aval.clear();
+        for (auto ele : curr) {
+            if (throws[i][1]==0) {
+                aval.insert((ele+throws[i][0])%n);
+            } else if (throws[i][1]==1) {
+                aval.insert((ele-throws[i][0]+n)%n);
             } else {
-                no;
+                aval.insert((ele+throws[i][0])%n);
+                aval.insert((ele-throws[i][0]+n)%n);
             }
         }
     }
+    cout<<(int)aval.size()<<endl;
+    if (aval.count(0)) {
+        aval.erase(0);
+        aval.insert(n);
+    }
+    for (auto ele : aval) {
+        cout<<ele<<" ";
+    }
+    cout<<endl;
 }
 
 int32_t main() {
     fast_io();
-    solve();
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
     return 0;
 }
