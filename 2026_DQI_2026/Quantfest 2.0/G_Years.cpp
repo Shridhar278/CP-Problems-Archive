@@ -1,10 +1,10 @@
 /*
-                                                                ███████  ████████  ███████   
-   ███████ ██   ██ ██████  ██ ██████  ██   ██  █████  ██████   ██     ██ ██    ██ ██     ██  
+                                                                ███████  ████████  ███████
+   ███████ ██   ██ ██████  ██ ██████  ██   ██  █████  ██████   ██     ██ ██    ██ ██     ██
    ██      ██   ██ ██   ██ ██ ██   ██ ██   ██ ██   ██ ██   ██         ██     ██   ██     ██
-   ███████ ███████ ██████  ██ ██   ██ ███████ ███████ ██████    ███████     ██     ███████ 
-        ██ ██   ██ ██   ██ ██ ██   ██ ██   ██ ██   ██ ██   ██  ██          ██     ██     ██ 
-   ███████ ██   ██ ██   ██ ██ ██████  ██   ██ ██   ██ ██   ██  ██          ██     ██     ██ 
+   ███████ ███████ ██████  ██ ██   ██ ███████ ███████ ██████    ███████     ██     ███████
+        ██ ██   ██ ██   ██ ██ ██   ██ ██   ██ ██   ██ ██   ██  ██          ██     ██     ██
+   ███████ ██   ██ ██   ██ ██ ██████  ██   ██ ██   ██ ██   ██  ██          ██     ██     ██
                                                                █████████   ██      ███████
 */
 
@@ -78,30 +78,40 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// ##catch question
-
-#define check 1
+#define check 0
 void solve() {
-    int l, r, g; cin >> l >> r >> g;
-    l = (l-1)/g+1;
-    r = r/g;
-    for (int x=r-l;x>=0;x--) {
-        for (int y=0;y<=r-l-x;y++) {
-            if (__gcd(l+y, l+y+x)==1) {
-                cout<<(l+y)*g<<" "<<(l+y+x)*g<<endl;
-                return;
+    int n; cin >> n;
+    int b, d;
+    multiset<pair<int, int>> days;
+    loop(0, n) {
+        cin >> b >> d;
+        days.insert({b, 0});
+        days.insert({d, 1});
+    }
+    int last=0;
+    int maxi=0, curr=0, yr=0;
+    for (auto day : days) {
+        if (day.first!=last) {
+            if (curr>maxi) {
+                maxi = curr;
+                yr = last;
             }
         }
+        curr += ((day.second) ? -1 : 1);
+        last=day.first;
+        debug(day.first)
+        debug(curr)
+        debug(maxi)
     }
-    cout<<"-1 -1"<<endl;
+    if (curr>maxi) {
+        maxi = curr;
+        yr = last;
+    }
+    cout<<yr<<" "<<maxi<<endl;
 }
 
 int32_t main() {
     fast_io();
-    int test;
-    cin >> test;
-    while (test--) {
-        solve();
-    }
+    solve();
     return 0;
 }
