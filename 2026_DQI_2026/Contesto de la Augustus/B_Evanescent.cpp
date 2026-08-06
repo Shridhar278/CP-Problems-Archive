@@ -78,62 +78,38 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 0
+#define check 1
 void solve() {
-    int n, q; cin >> n >> q;
-    string s, t; cin >> s >> t;
-    vi count11(n+1);
-    vi count10(n+1);
-    vi count01(n+1);
-    vi count00(n+1);
-    loop(0, n) {
-        count11[i+1]=count11[i];
-        count10[i+1]=count10[i];
-        count01[i+1]=count01[i];
-        count00[i+1]=count00[i];
-
-        if (s[i]=='1' && t[i]=='1') {
-            count11[i+1]++;
-        }
-        if (s[i]=='1' && t[i]=='0') {
-            count10[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='1') {
-            count01[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='0') {
-            count00[i+1]++;          
-        }
-    }
-
-
-    debug(count00)
-    debug(count01)
-    debug(count10)
-    debug(count11)
-
-    int x, y;
-    loop(0, q) {
-        cin >> x >> y;
-        int a = count11[y]-count11[x-1];
-        int b = count00[y]-count00[x-1];
-        int c = count10[y]-count10[x-1];
-        int d = count01[y]-count01[x-1];
-
-        debug(a)
-        debug(b)
-    
-        debug(c)
-        debug(d)
-        debug(a+b+c+d)
-
-        if (a+b>=max(c, d)-min(c, d)) {
-            yes;
+    int n; cin >> n;
+    string s; cin >> s;
+    int ans=0;
+    int curr=1, x=0;
+    int last = s[0];
+    for (int i=1;i<n-1;i++) {
+        if (s[i]==last) {
+            curr++;
         } else {
-            no;
+            x++;
+            curr=1;
         }
+        if (s[i]!=s[i-1] and s[i]!=s[i+1]) {
+            ans = max(ans, (int)1);
+            if (s[i-1]==s[i+1]) {
+                ans = max(ans, (int)2);
+            }
+        }
+        last=s[i];
     }
-}   
+    if (s[n-1]==last) {
+        curr++;
+    } else {
+        x++;
+        curr=1;
+    }
+    x++;
+
+    cout<<x-ans<<endl;
+}
 
 int32_t main() {
     fast_io();

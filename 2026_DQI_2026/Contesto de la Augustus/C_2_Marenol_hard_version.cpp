@@ -80,60 +80,67 @@ inline void fast_io() {
 
 #define check 0
 void solve() {
-    int n, q; cin >> n >> q;
-    string s, t; cin >> s >> t;
-    vi count11(n+1);
-    vi count10(n+1);
-    vi count01(n+1);
-    vi count00(n+1);
+    int n; cin >> n;
+    string s1, s2; cin >> s1 >> s2;
+    int odds1=0, odds2=0, evens1=0, evens2=0;
+    int oddpos1=0, oddpos2=0, evenpos1=0, evenpos2=0;
+    vi o1, o2, e1, e2;
+    debug(s1)
+    debug(s2)
     loop(0, n) {
-        count11[i+1]=count11[i];
-        count10[i+1]=count10[i];
-        count01[i+1]=count01[i];
-        count00[i+1]=count00[i];
-
-        if (s[i]=='1' && t[i]=='1') {
-            count11[i+1]++;
-        }
-        if (s[i]=='1' && t[i]=='0') {
-            count10[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='1') {
-            count01[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='0') {
-            count00[i+1]++;          
-        }
-    }
-
-
-    debug(count00)
-    debug(count01)
-    debug(count10)
-    debug(count11)
-
-    int x, y;
-    loop(0, q) {
-        cin >> x >> y;
-        int a = count11[y]-count11[x-1];
-        int b = count00[y]-count00[x-1];
-        int c = count10[y]-count10[x-1];
-        int d = count01[y]-count01[x-1];
-
-        debug(a)
-        debug(b)
-    
-        debug(c)
-        debug(d)
-        debug(a+b+c+d)
-
-        if (a+b>=max(c, d)-min(c, d)) {
-            yes;
+        if (i%2) {
+            if (s1[i]-'0') {
+                odds1++;
+                o1.push_back(i);
+            }
+            if (s2[i]-'0') {
+                odds2++;
+                o2.push_back(i);
+            }
+            oddpos1+=odds1;
+            oddpos2+=odds2;
+            debug(odds1)
+            debug(odds2)
+            debug(oddpos1)
+            debug(oddpos2)
         } else {
-            no;
+            if (s1[i]-'0') {
+                evens1++;
+                e1.push_back(i);
+            }
+            if (s2[i]-'0') {
+                evens2++;
+                e2.push_back(i);
+            }
+            evenpos1+=evens1;
+            evenpos2+=evens2;
         }
     }
-}   
+    //11011
+    //01111
+    //11010
+    //01110
+    debug(odds1)
+    debug(odds2)
+    debug(evens1)
+    debug(evens2)
+    debug(oddpos1)
+    debug(oddpos2)
+    debug(evenpos1)
+    debug(evenpos2)
+    if (odds1==odds2 && evens1==evens2) {
+        int a1=0, a2=0;
+        loop(0, odds2) {
+            a1+=abs(o1[i]-o2[i]);
+        }
+        loop(0, evens2) {
+            a2+=abs(e1[i]-e2[i]);
+        }
+        cout<<a1/2+a2/2<<endl;
+    } else {
+        cout<<-1<<endl;
+    }
+}
 
 int32_t main() {
     fast_io();

@@ -80,60 +80,54 @@ inline void fast_io() {
 
 #define check 0
 void solve() {
-    int n, q; cin >> n >> q;
-    string s, t; cin >> s >> t;
-    vi count11(n+1);
-    vi count10(n+1);
-    vi count01(n+1);
-    vi count00(n+1);
+    int n; cin >> n;
+    vvi a(n, vi(2));
     loop(0, n) {
-        count11[i+1]=count11[i];
-        count10[i+1]=count10[i];
-        count01[i+1]=count01[i];
-        count00[i+1]=count00[i];
-
-        if (s[i]=='1' && t[i]=='1') {
-            count11[i+1]++;
-        }
-        if (s[i]=='1' && t[i]=='0') {
-            count10[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='1') {
-            count01[i+1]++;            
-        }
-        if (s[i]=='0' && t[i]=='0') {
-            count00[i+1]++;          
-        }
+        cin >> a[i][0];
+        a[i][1]=i;
     }
-
-
-    debug(count00)
-    debug(count01)
-    debug(count10)
-    debug(count11)
-
-    int x, y;
-    loop(0, q) {
-        cin >> x >> y;
-        int a = count11[y]-count11[x-1];
-        int b = count00[y]-count00[x-1];
-        int c = count10[y]-count10[x-1];
-        int d = count01[y]-count01[x-1];
-
-        debug(a)
+    sort(a.begin(), a.end());
+    vi b(n);
+    int last=0, id=0, x=0;
+    int curr=0;
+    if (a[0][0]!=0) {
+        cout<<-1<<endl;
+        return;
+    }
+    loop(0, n) {
+        debug(last)
+        debug(curr)
         debug(b)
-    
-        debug(c)
-        debug(d)
-        debug(a+b+c+d)
-
-        if (a+b>=max(c, d)-min(c, d)) {
-            yes;
+        if (a[i][0]!=last) {
+            if ((a[i][0]-last)%curr || (a[i][0]-last)/curr<=x) {
+                cout<<-1<<endl;
+                return;
+            }
+            for(int j=id;j<i;j++) {
+                b[j]=(a[i][0]-last)/curr;
+            }
+            x=(a[i][0]-last)/curr;
+            curr=1;
+            id = i;
         } else {
-            no;
+            curr++;
         }
+        last = a[i][0];
     }
-}   
+    if (curr>0) {
+        loop(n-curr, n) {
+            b[i]=x+1;
+        }  
+    }
+    vi ans(n);
+    loop(0, n) {
+        ans[a[i][1]]=b[i];
+    }
+    loop(0, n) {
+        cout<<ans[i]<<" ";
+    }
+    cout<<endl;
+}
 
 int32_t main() {
     fast_io();
