@@ -41,14 +41,6 @@ template<class T> void _print(vector<T> v) {
     }
     cout << "]";
 }
-template<class T> void _print(multiset<T> v) {
-    cout << "[ ";
-    for (auto i : v) {
-        _print(i);
-        cout << " ";
-    }
-    cout << "]";
-}
 template<class T> void _print(map<T, T> v) {
     cout << "[ ";
     for (auto [i, j] : v) {
@@ -86,44 +78,39 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// 1. reseting nature
-// 1. XOR sums (xor_a^x=xor_b) => gives unique x = xor^a^xor^b
-// then simple O(n) check provides
-
 #define check 1
 void solve() {
-    int n; cin >> n;
+    int n, k; cin >> n >> k; k--;
     vi a(n); loop(0, n) cin >> a[i];
-    vi b(n); loop(0, n) cin >> b[i];
-    // oh no didn't read FOR ALL
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
-    if (a==b) {
-        yes;
-        return;
-    } 
-    // solving gives ans = XOR sum a ^ XOR sum b
-    int xor_a=0, xor_b=0;
-    loop(0, n) {
-        xor_a^=a[i];
-        xor_b^=b[i];
+    int i, j, p1=-1, p2=-1;
+    for (i=0;i<k;i++) {
+        if (a[i]>a[k]) {
+            if (p1==-1) {
+                p1=i;
+            } else if (p2==-1) {
+                p2=i;
+                break;
+            }
+        } 
     }
-    int ans = xor_a^xor_b;
-    auto it = find(a.begin(), a.end(), ans);
-    if (it==a.end()) {
-        no;
-        return;
-    }
-    loop(0, n) {
-        if (i!=(it-a.begin())) {
-            a[i]^=a[(it-a.begin())];
+    for (j=k+1;j<n;j++) {
+        if (a[j]>a[k]) {
+            break;
         }
-    }
-    sort(a.begin(), a.end());
-    if (a==b) {
-        yes;
+    } j-=k+1;
+
+    if (p1==-1 && p2==-1) {
+        cout<<k+j<<endl;
+    } else if (p2==-1) {
+        if (!p1) {
+            p1++;
+        }
+        cout<<max(p1-1, k-p1)<<endl;
     } else {
-        no;
+        if (!p1) {
+            p1++;
+        }
+        cout<<max(p1-1, p2-p1)<<endl;
     }
 }
 

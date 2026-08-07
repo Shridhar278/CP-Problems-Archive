@@ -27,12 +27,6 @@ long long fastModularExp(long long base, long long exp, long long mod) {
 void _print(int a) {
    cout << a;
 }
-void _print(string a) {
-   cout << a;
-}
-void _print(char a) {
-   cout << a;
-}
 template<class T> void _print(vector<T> v) {
     cout << "[ ";
     for (auto i : v) {
@@ -41,7 +35,7 @@ template<class T> void _print(vector<T> v) {
     }
     cout << "]";
 }
-template<class T> void _print(multiset<T> v) {
+template<class T> void _print(multiset<T, greater<>> v) {
     cout << "[ ";
     for (auto i : v) {
         _print(i);
@@ -86,45 +80,41 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// 1. reseting nature
-// 1. XOR sums (xor_a^x=xor_b) => gives unique x = xor^a^xor^b
-// then simple O(n) check provides
-
-#define check 1
+#define check 0
 void solve() {
-    int n; cin >> n;
-    vi a(n); loop(0, n) cin >> a[i];
-    vi b(n); loop(0, n) cin >> b[i];
-    // oh no didn't read FOR ALL
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
-    if (a==b) {
-        yes;
-        return;
-    } 
-    // solving gives ans = XOR sum a ^ XOR sum b
-    int xor_a=0, xor_b=0;
-    loop(0, n) {
-        xor_a^=a[i];
-        xor_b^=b[i];
-    }
-    int ans = xor_a^xor_b;
-    auto it = find(a.begin(), a.end(), ans);
-    if (it==a.end()) {
-        no;
-        return;
-    }
-    loop(0, n) {
-        if (i!=(it-a.begin())) {
-            a[i]^=a[(it-a.begin())];
+    int n, m; cin >> n >> m;
+    vi vals(n); loop(0, n) cin >> vals[i];
+    vvi grid(n, vi(m));
+    for (int i=0;i<n;i++) {
+        for (int j=0;j<m;j++) {
+            cin >> grid[i][j];
         }
     }
-    sort(a.begin(), a.end());
-    if (a==b) {
-        yes;
-    } else {
-        no;
+    vi minis=vals;
+    loop(1, n) {
+        minis[i]=min(minis[i], minis[i-1]);
     }
+
+    int best=m;
+    multiset<int, greater<>> eles;
+    for (int i=n-1;i>=0;i--) {
+        debug(eles)
+        debug(best)
+        for (int j=0;j<m;j++) {
+            eles.insert(grid[i][j]);
+        }
+        int x = 1;
+        int curr=0;
+        for (auto it=eles.begin();x<m;it++) {
+            curr+=*it;
+            if (curr>=minis[i]) {
+                best=min(x, best);
+                break;
+            }
+            x++;
+        }
+    }
+    cout<<best<<endl;
 }
 
 int32_t main() {

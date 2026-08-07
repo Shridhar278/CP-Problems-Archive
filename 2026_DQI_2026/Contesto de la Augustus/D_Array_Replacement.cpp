@@ -41,14 +41,6 @@ template<class T> void _print(vector<T> v) {
     }
     cout << "]";
 }
-template<class T> void _print(multiset<T> v) {
-    cout << "[ ";
-    for (auto i : v) {
-        _print(i);
-        cout << " ";
-    }
-    cout << "]";
-}
 template<class T> void _print(map<T, T> v) {
     cout << "[ ";
     for (auto [i, j] : v) {
@@ -86,45 +78,34 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// 1. reseting nature
-// 1. XOR sums (xor_a^x=xor_b) => gives unique x = xor^a^xor^b
-// then simple O(n) check provides
+// improving the debigging skills - abs() here
+// don't do blame game & change logic etc.
 
-#define check 1
+#define check 0
 void solve() {
     int n; cin >> n;
     vi a(n); loop(0, n) cin >> a[i];
-    vi b(n); loop(0, n) cin >> b[i];
-    // oh no didn't read FOR ALL
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
-    if (a==b) {
-        yes;
-        return;
-    } 
-    // solving gives ans = XOR sum a ^ XOR sum b
-    int xor_a=0, xor_b=0;
-    loop(0, n) {
-        xor_a^=a[i];
-        xor_b^=b[i];
+    vi diffs(n-1);
+    loop(0, n-1) {
+        diffs[i]=a[i+1]-a[i];
     }
-    int ans = xor_a^xor_b;
-    auto it = find(a.begin(), a.end(), ans);
-    if (it==a.end()) {
-        no;
-        return;
-    }
-    loop(0, n) {
-        if (i!=(it-a.begin())) {
-            a[i]^=a[(it-a.begin())];
+    int curr=abs(diffs[0]%2);
+    int i=0;
+    for (int j=1;j<n-1;j++) {
+        if (abs(diffs[j]%2)!=curr) {
+            sort(diffs.begin()+i, diffs.begin()+j);
+            i=j;
         }
+        curr=abs(diffs[j]%2);
     }
-    sort(a.begin(), a.end());
-    if (a==b) {
-        yes;
-    } else {
-        no;
+    sort(diffs.begin()+i, diffs.end());
+    vi ans(n); ans[0]=a[0];
+    cout<<ans[0]<<" ";
+    for (int k=1;k<n;k++) {
+        ans[k]=ans[k-1]+diffs[k-1];
+        cout<<ans[k]<<" ";
     }
+    cout<<endl;
 }
 
 int32_t main() {

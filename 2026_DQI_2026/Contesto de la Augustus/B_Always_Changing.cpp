@@ -41,14 +41,6 @@ template<class T> void _print(vector<T> v) {
     }
     cout << "]";
 }
-template<class T> void _print(multiset<T> v) {
-    cout << "[ ";
-    for (auto i : v) {
-        _print(i);
-        cout << " ";
-    }
-    cout << "]";
-}
 template<class T> void _print(map<T, T> v) {
     cout << "[ ";
     for (auto [i, j] : v) {
@@ -86,44 +78,54 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-// 1. reseting nature
-// 1. XOR sums (xor_a^x=xor_b) => gives unique x = xor^a^xor^b
-// then simple O(n) check provides
-
-#define check 1
+#define check 0
 void solve() {
-    int n; cin >> n;
-    vi a(n); loop(0, n) cin >> a[i];
-    vi b(n); loop(0, n) cin >> b[i];
-    // oh no didn't read FOR ALL
-    sort(a.begin(), a.end());
-    sort(b.begin(), b.end());
-    if (a==b) {
-        yes;
-        return;
-    } 
-    // solving gives ans = XOR sum a ^ XOR sum b
-    int xor_a=0, xor_b=0;
-    loop(0, n) {
-        xor_a^=a[i];
-        xor_b^=b[i];
-    }
-    int ans = xor_a^xor_b;
-    auto it = find(a.begin(), a.end(), ans);
-    if (it==a.end()) {
-        no;
-        return;
-    }
-    loop(0, n) {
-        if (i!=(it-a.begin())) {
-            a[i]^=a[(it-a.begin())];
+    int x; cin >> x;
+    string s; cin >> s;
+    vvi blocks(2);
+    blocks[s[0]-'0'].push_back(1);
+    char curr = s[0];
+    loop(1, x) {
+        if (s[i]==curr) {
+            blocks[curr-'0'].back()++;
+        } else {
+            blocks[s[i]-'0'].push_back(1);
         }
+        curr = s[i];
     }
-    sort(a.begin(), a.end());
-    if (a==b) {
-        yes;
+    int z=0, tz=0, o=0, to=0;
+    if (s[0]=='0') {
+        tz++;
     } else {
-        no;
+        to++;
+    }
+    if (s[x-1]=='0') {
+        tz++;
+    } else {
+        to++;
+    }
+    int n = (int)blocks[0].size();
+    int m = (int)blocks[1].size();
+    for (int i=0;i<n;i++) {
+        z+=blocks[0][i]-1;
+    }
+    for (int i=0;i<m;i++) {
+        o+=blocks[1][i]-1;
+    }
+    debug(z)
+    debug(o)
+    debug(tz)
+    debug(to)
+    if (abs(z-o)<=1) {
+        cout<<z+o<<endl;
+    } else {
+        if (z>o && abs(z-to-o)<=1) {
+            cout<<2*z-1<<endl;
+        } else if (o>z && abs(o-tz-z)<=1) {
+            cout<<2*o-1<<endl;
+        } else {
+            cout<<-1<<endl;
+        }
     }
 }
 
