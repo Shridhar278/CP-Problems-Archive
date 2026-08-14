@@ -241,44 +241,33 @@ inline void fast_io() {
 
 void solve() {
     int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
+    string s; cin >> s;
+    int o, c; o=c=0;
+    int ans, count; ans=count=0;
     loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
-    }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
+        if (s[i]=='(') {
+            o++;
+        } else {
+            c++;
         }
+        if (c>o) {
+            count++;
+        } else if (c==o && s[i]=='(') {
+            count++;
+            ans+=count;
+            o=c=0;
+            count=0;
+        } else {
+            count=0;
+        }
+        debug(count)
+        debug(ans)
+    }
+    if (o!=c) {
+        cout<<-1<<endl;
     } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
+        cout<<ans+count<<endl;
     }
-    cout<<endl;
 }
 
 int32_t main() {

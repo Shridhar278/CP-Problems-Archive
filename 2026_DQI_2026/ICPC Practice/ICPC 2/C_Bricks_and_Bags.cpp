@@ -241,50 +241,24 @@ inline void fast_io() {
 
 void solve() {
     int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
-    loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
+    vi a(n); loop(i, 0, n) cin >> a[i];
+    sort(all(a));
+    // 1 8 17 19 45 59
+    int ans=0;
+    for (int i=0;i<n-1;i++) {
+        ans = max(ans, a[i+1]-a[i]+max(a[i+1]-a[0], a[n-1]-a[i]));
     }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
-    } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
-    }
-    cout<<endl;
-}
+    cout<<ans<<endl;
+} 
 
 int32_t main() {
     // precomputeFactorials();
     // sieve();
     fast_io();
-    solve();
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
     return 0;
 }

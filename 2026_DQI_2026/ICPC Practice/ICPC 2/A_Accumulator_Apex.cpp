@@ -239,46 +239,78 @@ inline void fast_io() {
 // SOLVE()
 // ==============================================================================
 
+// HUGE LOGIC PROBLEM
+// try smth else
+
 void solve() {
-    int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
-    loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
-    }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
+    int x, k; cin >> x >> k;
+    vi id(k, 0);
+    vvi lst(k);
+    int n, m;
+    loop(i, 0, k) {
+        cin >> n;
+        int val=0;
+        loop(j, 0, n) {
+            cin >> m;
+            if (m*val>=0) {
+                val+=m;
             } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
+                lst[i].push_back(val);
+                val=m;
             }
         }
-    } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
+        lst[i].push_back(val);
+    }
+    debug(lst)
+    // some datastructure reqd. HIGH-ORDER THINKING HERE
+    vvvi pairs(k);
+    loop(i, 0, k) {
+        int n = (int)lst[i].size();
+        int a=0, b=0;
+        for (int j=0;j<n;) {
+            if (j==n-1 && lst[i][j]<=0) {
+                break;
             }
+            if (j==0 && lst[i][j]>=0) {
+                x+=lst[i][j];
+                j++;
+                continue;
+            }
+            pairs[i].push_back(vi({lst[i][j], 
+                lst[i][j]+lst[i][j+1]}));
+            j+=2;
         }
     }
-    cout<<endl;
+
+    // use priority queues
+    maxheap<pair<int, vi>> q;
+    loop(i, 0, k) {
+        if ((int)pairs[i].size()) {
+            q.push({pairs[i][0][0], vi({pairs[i][0][1], i})});
+            id[i]++;
+        }
+    }
+    debug(pairs)
+    int mx = x;
+
+    while(!q.empty()) {
+        pair<int, vi> curr = q.top(); q.pop();
+        debug(x)
+        debug(curr.ff)
+        debug(curr.ss)
+        if (-curr.ff>x) {
+            break;
+        }
+        x+=curr.ss[0];
+        int i = curr.ss[1];
+        if (id[i]<(int)pairs[i].size()) {
+            q.push({pairs[i][id[i]][0], 
+                vi({pairs[i][id[i]][1], i})});
+        }
+        id[i]++;
+        mx=max(mx, x);
+    }
+    cout<<mx<<endl;
 }
 
 int32_t main() {

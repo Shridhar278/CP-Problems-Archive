@@ -240,51 +240,73 @@ inline void fast_io() {
 // ==============================================================================
 
 void solve() {
-    int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
+    int n, k; cin >> n >> k;
+    map<int, vi> rems;
     loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
+        int x; cin >> x;
+        rems[x%k].push_back(x/k);
     }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
+    int odds, ans; ans=odds=0;
+    debug(rems)
+    for (auto & [key, val] : rems) {
+        sort(all(val));
+        int x = (int)val.size();
+        int ele=0;
+        if (!(x%2)) {
+            loop(i, 0, x/2) {
+                ele+=(val[2*i+1]-val[2*i]);
+            }
+        } else {
+            if (odds) {
+                cout<<-1<<endl;
+                return;
             } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
+                odds=1;
+                vi diffs(x-1);
+                loop(i, 1, x) {
+                    diffs[i-1]=val[i]-val[i-1];
+                }
+                x--;
+                if (x==0) continue;
+                // high calc DP odd & even
+                vi left(x); left[0]=diffs[0];
+                vi right(x); right[x-1]=diffs[x-1];
+                loop(i, 1, x) {
+                    if (!(i%2)) {
+                        left[i]=left[i-1]+diffs[i];
+                    } else {
+                        left[i]=left[i-1];
+                    }
+                }
+                for(int i=x-2;i>=0;i--) {
+                    if (i%2) {
+                        right[i]=right[i+1]+diffs[i];
+                    } else {
+                        right[i]=right[i+1];
+                    }
+                }
+                debug(left)
+                debug(right)
+                ele=min(right[0], left[x-1]);
+                for (int i=1;i<x-1;i+=2) {
+                    ele = min(ele, left[i]+right[i+1]);
                 }
             }
         }
-    } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
+        debug(ele)
+        ans+=ele;
     }
-    cout<<endl;
+    cout<<ans<<endl;
 }
 
 int32_t main() {
     // precomputeFactorials();
     // sieve();
     fast_io();
-    solve();
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
     return 0;
 }

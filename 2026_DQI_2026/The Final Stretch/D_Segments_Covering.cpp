@@ -90,7 +90,7 @@ ostream &operator<<(ostream &out, vector<T> &a)
 // ==============================================================================
 
 void _print(int a) { cout << a; }
-void _print(string a) { cout << a; }
+void _print(pii a) { cout <<"{ "<< a.ff << " " << a.ss << " }"; }
 
 template <class T>
 void _print(vector<T> v)
@@ -134,11 +134,11 @@ void _print(map<T, V> v)
     cout << "[ ";
     for (auto [i, j] : v)
     {
-        cout << "{ ";
+        cout << "[ ";
         _print(i);
-        cout << " ";
+        cout << " : ";
         _print(j);
-        cout << " }";
+        cout << " ]";
     }
     cout << "]";
 }
@@ -239,46 +239,43 @@ inline void fast_io() {
 // SOLVE()
 // ==============================================================================
 
+int prob(int p, int q) {
+    return (p*(invmod(q-p, mod9)))%mod9;
+}
+
+// GOT IT CLEAN DP
+
 void solve() {
-    int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
+    int n, m; cin >> n >> m;
+    map<pii, vpii> segs;
+    int l, r, p, q;
+    int base=1;
     loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
+        cin >> l >> r >> p >> q;
+        segs[{r, l}].push_back({p%mod9, q%mod9});
+        base*=(q-p);
+        base%=mod9;
+        base*=invmod(q, mod9);
+        base%=mod9;
     }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
+    debug(segs)
+    vi dp(m+1, 0); dp[0]=1; // prob of having 0 to x
+    loop(i, 1, m+1) {
+        auto it1 = segs.lower_bound({i, 0});
+        auto it2 = segs.upper_bound({i, i+1});
+        for (auto it=it1;it!=it2;it++) {
+            auto & [key, val] = *it;
+            for (auto ele : val) {
+                debug(i)
+                debug((*it).ff)
+                debug((*it).ss)
+                dp[i] += dp[key.ss-1]*prob(ele.ff, ele.ss);
+                dp[i]%=mod9;
             }
         }
-    } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
+        debug(dp[i])
     }
-    cout<<endl;
+    cout<<(dp[m]*base)%mod9<<endl;
 }
 
 int32_t main() {

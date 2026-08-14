@@ -240,51 +240,37 @@ inline void fast_io() {
 // ==============================================================================
 
 void solve() {
-    int n; cin >> n;
-    vi mod3(3);
-    vi idx(n);
-    int x;
-    loop(i, 0, n) {
-        cin >> x;
-        mod3[x%3]++;
-        idx[i]=x%3;
-    }
-    // analysis
-    int c0=n/2, c1=n/2;
-    if (mod3[0]>=n/2) {
-        cout<<2<<endl;
-        loop(i, 0, n) {
-            if (idx[i]!=0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
-        }
-    } else {
-        cout<<0<<endl;
-        loop(i, 0, n) {
-            if (idx[i]==0) {
-                cout<<1; c1--;
-            } else {
-                if (c0>0) {
-                    cout<<0; c0--;
-                } else {
-                    cout<<1; c1--;
-                }
-            }
+    int px, py; cin >> px >> py;
+    string s; cin >> s;
+    int tx1=0, tx2=0, ty1=0, ty2=0;
+    for (auto ele : s) {
+        if (ele=='R') {
+            tx1++;
+        } else if (ele=='L') {
+            tx2--;
+        } else if (ele=='U') {
+            ty1++;
+        } else {
+            ty2--;
         }
     }
-    cout<<endl;
+    if (px<=tx1 && px>=tx2) {
+        if (py<=ty1 && py>=ty2) {
+            yes;
+            return;
+        }
+    }
+    no;
 }
 
 int32_t main() {
     // precomputeFactorials();
     // sieve();
     fast_io();
-    solve();
+    int test;
+    cin >> test;
+    while (test--) {
+        solve();
+    }
     return 0;
 }

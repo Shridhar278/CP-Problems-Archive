@@ -243,6 +243,8 @@ inline void fast_io()
 // SOLVE()
 // ==============================================================================
 
+// later
+
 void solve()
 {
     ll n;
@@ -275,9 +277,7 @@ void solve()
             dp1[i] = dp2[j];
             dp1[i].ff++;
             dp1[i].ss.push_back(i);
-            // if (dp1[i].ff==dp1[i-1].ff) {
-            //     dp1[i] = max(dp1[i], dp1[i-1]);
-            // }
+            dp1[i] = max(dp1[i], dp1[i-1]);
         }
         if (k < 1)
         {
@@ -288,9 +288,13 @@ void solve()
             dp2[i] = dp1[k];
             dp2[i].ff++;
             dp2[i].ss.push_back(i);
-            // if (dp2[i].ff==dp2[i-1].ff) {
-            //     dp2[i] = min(dp2[i], dp2[i-1]);
-            // }
+            if (dp2[i].ff==dp2[i-1].ff) {
+                dp2[i] = min(dp2[i], dp2[i-1]);
+            } else if (dp2[i].ff==dp2[i-1].ff) {
+                dp2[i] = max(dp2[i], dp2[i-1]);
+            } else {
+
+            }
         }
     }
     // debug(dp1)
