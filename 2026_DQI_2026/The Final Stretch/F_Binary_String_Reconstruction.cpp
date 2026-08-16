@@ -90,7 +90,6 @@ ostream &operator<<(ostream &out, vector<T> &a)
 // ==============================================================================
 
 void _print(int a) { cout << a; }
-void _print(pii a) { cout <<"{ "<< a.ff << " " << a.ss << " }"; }
 void _print(string a) { cout << a; }
 
 template <class T>
@@ -240,59 +239,44 @@ inline void fast_io() {
 // SOLVE()
 // ==============================================================================
 
-// think tmrw
-
-// really GOOD THINKIN'
-
 void solve() {
-    int n; cin >> n;
-    vvi grid(2, vi(n));
-    loop(i, 0, 2) {
-        loop(j, 0, n) {
-            cin >> grid[i][j];
+    int n0, n1, n2; cin >> n0 >> n1 >> n2;
+    debug(n0)
+    debug(n1)
+    debug(n2)
+    int d=0;
+    if (n1%2==0 && n1>0) {
+        cout<<"1";
+        n1--;
+        if (n1>0) {
+            d=1;
+        }
+    } else if (n1%2) {
+        d=1;
+        n1--;
+    }
+    if (n0>0) {
+        loop(i, 0, n0+1) {
+            cout<<"0";
+        }
+    } else {
+        if (d==1) {
+            cout<<"0";
         }
     }
-    vpii up(n); 
-    up[0]={grid[0][0], grid[0][0]}; 
-    vpii down(n); 
-    down[n-1]={grid[1][n-1], grid[1][n-1]};
-    loop(i, 1, n) {
-        up[i]={min(grid[0][i], up[i-1].ff)
-            ,max(grid[0][i], up[i-1].ss)};
+    loop(i, 0, n1/2) {
+        cout<<"10";
     }
-    for (int i=n-2;i>=0;i--) {
-        down[i]={min(grid[1][i], down[i+1].ff)
-            ,max(grid[1][i], down[i+1].ss)};
+    if (n2>0) {
+        loop(i, 0, n2+1) {
+            cout<<"1";
+        }
+    } else {
+        if (d==1) {
+            cout<<"1";
+        }
     }
-
-    int ans = 0;
-    vi best(2*n + 1, 0);
-
-    // kinda DP kinda TOUGH
-    loop(i, 0, n) {
-        int mn = min(up[i].ff, down[i].ff);
-        int mx = max(up[i].ss, down[i].ss);
-        best[mx] = max(best[mx], mn);
-    }
-    // individually OKAY
-    loop(r, 1, 2*n + 1) {
-        best[r] = max(best[r], best[r-1]);
-        ans += best[r];
-    }
-
-    cout << ans << endl;
-
-    // int ans = 0;
-    // debug(up)
-    // debug(down)
-    // int lo=-INF, hi=INF;
-    // loop(i, 0, n) {
-    //     lo = max(lo, min(up[i].ff, down[i].ff));
-    //     hi = min(hi, max(up[i].ss, down[i].ss));
-    //     debug(lo)
-    //     debug(hi)
-    // }
-    // cout<<lo*(2*n-hi+1)<<endl;
+    cout<<endl;
 }
 
 int32_t main() {
