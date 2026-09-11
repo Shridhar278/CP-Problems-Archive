@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -240,35 +240,30 @@ inline void fast_io() {
 // SOLVE()
 // ==============================================================================
 
-void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
-    }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
+// 4 1 6 2 4 6
+//     .     .
+//     .     .
+// .   .   . .
+// .   .   . .
+// .   . . . .
+// . . . . . .
 
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
+void solve() {
+    int n; cin >> n;
+    vi a(n); loop(i, 0, n) cin >> a[i];
+    int base=0, mn=INF, count=0, best=-INF;
+    for (int i=n-1;i>=0;i--) {
+        base += (a[i] > mn) ? a[i]-mn : 0LL;
+        if (a[i]>=mn) {
+            count++;
+        } else {
+            mn = a[i];
+            best = max(best, count);
+            count=0;
+        }
     }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    best = max(best, count);
+    cout<<base+best<<endl;
 }
 
 int32_t main() {

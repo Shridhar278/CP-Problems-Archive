@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -241,34 +241,34 @@ inline void fast_io() {
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    int n; cin >> n;
+    vi a(n+1); loop(i, 1, n+1) cin >> a[i];
+    vi mx(n), mn(n);
+    set<int, greater<int>> tree_x;
+    set<int> tree_n;
+    loop(i, 1, n+1) {
+        if (a[i]!=a[i-1]) {
+            loop(j, a[i-1]+1, a[i]) {
+                tree_x.insert(j);
+                tree_n.insert(j);
+            }
+            mx[i-1]=a[i];
+            mn[i-1]=a[i];
+        } else {
+            mx[i-1]=*tree_x.begin();
+            tree_x.erase(mx[i-1]);
+            mn[i-1]=*tree_n.begin();
+            tree_n.erase(mn[i-1]);
+        }
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
 
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
-    }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    loop(i, 0, n) {
+        cout<<mn[i]<<" ";
+    } cout<<endl;
+
+    loop(i, 0, n) {
+        cout<<mx[i]<<" ";
+    } cout<<endl;
 }
 
 int32_t main() {

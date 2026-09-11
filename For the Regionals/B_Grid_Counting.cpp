@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -176,7 +176,7 @@ int binexp(int base, int exp, int m) // O(log exp)
 int invmod(int n, int m) { return binexp(n, m - 2, m); } // O(log m) = O(1)
 
 int fact[MAXM], invFact[MAXM];
-void precomputeFactorials(int n = MAXM - 1, int m=mod7) // O(n) pp
+void precomputeFactorials(int n = MAXM - 1, int m=mod9) // O(n) pp
 {
     fact[0] = 1;
     invFact[0] = 1;
@@ -235,44 +235,36 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+#define check 0
 // ==============================================================================
 // SOLVE()
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    int n; cin >> n;
+    vi a(n+1); loop(i, 0, n) cin >> a[i+1];
+    int ans=1;
+    int rem=(n%2)?1:2, ttl=0;
+    for (int i=(n+1)/2;i>=1;i--) {
+        ttl+=a[i];
+        debug(i)
+        debug(rem)
+        debug(a[i])
+        debug(ans)
+        if (rem<a[i]) {
+            ans=0;
+            break;
+        }
+        ans*=nCr(rem, a[i], mod9);
+        ans%=mod9;
+        rem+=2;
+        rem-=a[i];
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
-
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
-    }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
-}
+    cout<<((ttl==n && accumulate(all(a), 0LL)==n)?ans:0)<<endl;
+}   
 
 int32_t main() {
-    // precomputeFactorials();
+    precomputeFactorials(MAXM-1, mod9);
     // sieve();
     fast_io();
     int test;

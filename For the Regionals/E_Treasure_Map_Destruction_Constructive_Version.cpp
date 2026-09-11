@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -235,40 +235,204 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+#define check 0
 // ==============================================================================
 // SOLVE()
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    int n; cin >> n;
+    vi a(n); loop(i, 0, n) cin >> a[i];
+    vpii index;
+    vi ans(n);
+    loop(i, 0, n) {
+        if (a[i]!=-1) {
+            index.push_back({i, a[i]});
+        }
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
+    int x = (int)index.size();
+    ans=a;
+    if (x==0) {
+        loop(i, 0, n) {
+            cout<<1;
+        }
+        cout<<endl;
+        return;
+    } else if (x==1) {
+        for (int i=index[0].ff;i<n;i++) {
+            ans[i]=max((int)0, index[0].ss-(i-index[0].ff));
+        }
+        for (int i=index[0].ff;i>=0;i--) {
+            ans[i]=max((int)0, index[0].ss-(index[0].ff-i));
+        }
+        int flag=1;
+        loop(i, 0, n) {
+            if (ans[i]==0) {
+                flag=0;
+                break;
+            }
+        }
+        if (flag) {
+            cout<<-1<<endl;
+        } else {
+            loop(i, 0, n) {
+                if (ans[i]==0)
+                    cout<<1;
+                else {
+                    cout<<0;
+                }
+            }
+            cout<<endl;
+        }
+        return;
+    }
+    vi direc;
+    // 2 edge cases (front & back)
+    if (index[0].ss<=index[0].ff) {
+        direc.push_back(0);
+        for (int i=index[0].ff-1;i>=0;i--) {
+            ans[i]=max((int)0, index[0].ss+(i-index[0].ff));
+        }
+    } else {
+        direc.push_back(1);
+        for (int i=index[0].ff-1;i>=0;i--) {
+            ans[i]=max((int)0, index[0].ss-(i-index[0].ff));
+        }
+    }
+    // standard
 
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
+    loop(i, 0, x-1) {
+        int flg=1;
+        if (index[i].ss+index[i+1].ss<=abs(index[i].ff-index[i+1].ff)) {
+            loop(j, index[i].ff+1, index[i+1].ff) {
+                ans[j]=max(index[i].ss+index[i].ff-j, (int)0);
+            }
+            for (int j=index[i+1].ff-1;j>index[i].ff;j--) {
+                ans[j]=max({ans[j], index[i+1].ss+j-index[i+1].ff, (int)0});
+            }
+            loop(j, index[i].ff, index[i+1].ff+1) {
+                if (ans[j]==0) {
+                    flg=0;
+                    break;
+                }
+            }
+        }
+        if (flg) {
+            loop(j, index[i].ff+1, index[i+1].ff) {
+                ans[j]=index[i].ss+j-index[i].ff;
+            }
+            for (int j=index[i+1].ff-1;j>index[i].ff;j--) {
+                ans[j]=min(ans[j], index[i+1].ss+index[i+1].ff-j);
+            }
+            if (index[i+1].ss>index[i].ss) {
+                direc.push_back(-1);
+            } else if (index[i+1].ss<index[i].ss) {
+                direc.push_back(1);
+            } else {
+                direc.push_back(2);
+            }
+        } else {
+            direc.push_back(0);
+        }
     }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    if (n-1-index[x-1].ss>=index[x-1].ff) {
+        direc.push_back(0);
+        for (int i=index[x-1].ff+1;i<n;i++) {
+            ans[i]=max((int)0, index[x-1].ss-(i-index[x-1].ff));
+        }
+    } else {
+        direc.push_back(-1);
+        for (int i=index[x-1].ff+1;i<n;i++) {
+            ans[i]=max((int)0, index[x-1].ss+(i-index[x-1].ff));
+        }
+    }
+    int flag=1;
+    loop(i, 0, n) {
+        if (ans[i]==0) {
+            flag=0;
+            break;
+        }
+    }
+    loop(i, 0, n-1) {
+        if (abs(ans[i]-ans[i+1])>1) {
+            flag=1;
+            break;
+        }
+    }
+    loop(i, 0, n-2) {
+        if (ans[i]==ans[i+1] && ans[i+1]==ans[i+2] && ans[i]!=0) {
+            flag=1;
+            break;
+        }
+    }
+    debug(ans)
+    // debug(direc)
+    // loop(i, 0, x) {
+    //     if (direc[i]==1 && direc[i+1]==-1) {
+    //         flag=1;
+    //         break;
+    //     }
+    //     if (direc[i]==2 && direc[i+1]==-1) {
+    //         flag=1;
+    //         break;
+    //     }
+    //     if (direc[i]==1 && direc[i+1]==2) {
+    //         flag=1;
+    //         break;
+    //     }
+    //     if (direc[i]==2 && direc[i+1]==2) {
+    //         flag=1;
+    //         break;
+    //     }
+    // }
+    int slope;
+    if (ans[0]<ans[1] && ans[0]==0) {
+        slope=-1;
+    } else if (ans[0]>ans[1]) {
+        slope=1;
+    } else {
+        if (ans[0]==0) {
+            slope=1;
+        } else {
+            cout<<-1<<endl;
+            return;
+        }
+    }
+    loop(i, 2, n) {
+        if (ans[i-1]>ans[i]) {
+            if (slope==-1) {
+                // its ok
+            }
+        } else if (ans[i-1]<ans[i]) {
+            if (slope==1) {
+                if (ans[i-1]==0) {
+                    slope=-1;
+                    continue;
+                }
+                cout<<-1<<endl;
+                return;
+            }
+        } else {
+            if (ans[i]==0) {
+                slope=1;
+                continue;
+            }
+            slope*=-1;
+        }
+        debug(slope)
+    }
+    if (slope==1 && ans[n-1]!=0) {
+        cout<<-1<<endl;
+        return;
+    }
+    if (flag==1) {
+        cout<<-1<<endl;
+        return;
+    }
+    loop(i, 0, n) {
+        cout<<((ans[i]) ? 0 : 1);
+    }
+    cout<<endl;
 }
 
 int32_t main() {

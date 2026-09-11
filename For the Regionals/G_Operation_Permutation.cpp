@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -235,44 +235,60 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+#define check 0
 // ==============================================================================
 // SOLVE()
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    int n, x; cin >> n >> x;
+    vector<pair<char, int>> task(n);
+    loop(i, 0, n) {
+        cin >> task[i].ff >> task[i].ss;
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
-
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
+    int sm=0, add=0, mul=0;
+    vi eles;
+    loop(i, 0, n) {
+        if (task[i].ff=='+') {
+            sm+=task[i].ss;
+            add++;
+        } else if (task[i].ff=='-') {
+            sm-=task[i].ss;
+            add++;
+        } else if (task[i].ff=='x') {
+            eles.push_back(task[i].ss);
+            mul++;
+        } else {
+            eles.push_back(invmod(task[i].ss, mod7));
+            mul++;
+        }
+        sm=(sm+mod7)%mod7;
     }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    int bino=0;
+    vi dp(mul+1, 0); dp[0]=1;
+    loop(i, 1, mul+1) {
+        for (int j=i;j>=1;j--) {
+            dp[j]+=eles[i-1]*dp[j-1];
+            dp[j]%=mod7;
+        }
+    }
+    loop(i, 0, mul+1) {
+        bino+=invmod(nCr(mul, i, mod7), mod7)*dp[i];
+        bino%=mod7;
+    }
+    int xyz = x*dp[mul]; xyz%=mod7;
+    int ttl=sm*invmod(mul+1, mod7); ttl%=mod7;
+    debug(bino)
+    debug(ttl)
+    debug(xyz)
+    debug(dp)
+    bino*=ttl; bino%=mod7; 
+    int ans=xyz+bino; ans%=mod7;
+    cout<<ans<<endl;
 }
 
 int32_t main() {
-    // precomputeFactorials();
+    precomputeFactorials();
     // sieve();
     fast_io();
     int test;

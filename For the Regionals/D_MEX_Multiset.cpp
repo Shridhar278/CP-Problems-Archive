@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 2e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -235,40 +235,49 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+#define check 0
 // ==============================================================================
 // SOLVE()
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    int n; cin >> n; int x;
+    vpii a(n); 
+    loop(i, 0, n) {
+        cin >> x;
+        a[i]={x, i};
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
-
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
+    sort(all(a));
+    int m1=0, m2=0, m3=0;
+    vector<char> ans(n);
+    loop(i, 0, n) {
+        int x = a[i].ff, y = a[i].ss; 
+        if (m1==min({m1, m2, m3})) {
+            ans[y]='A';
+            if (m1==x) {
+                m1++;
+            }
+        } else if (m2==min({m1, m2, m3})) {
+            ans[y]='B';
+            if (m2==x) {
+                m2++;
+            }
+        } else if (m3==min({m1, m2, m3})) {
+            ans[y]='C';
+            if (m3==x) {
+                m3++;
+            }
+        }
     }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    if (2*max({m1, m2, m3})<=m1+m2+m3) {
+        yes;
+        loop(i, 0, n) {
+            cout<<ans[i];
+        }
+        cout<<endl;
+    } else {
+        no;
+    }
 }
 
 int32_t main() {

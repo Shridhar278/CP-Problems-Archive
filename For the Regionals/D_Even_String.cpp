@@ -65,7 +65,7 @@ using minheap = priority_queue<T, vector<T>, greater<T>>;
 
 const int mod7 = 1e9 + 7;
 const int mod9 = 998244353;
-const int MAXM = 1e6+5;
+const int MAXM = 5e5+5;
 const int INF = 1e18;
 const double EPS = 1e-9;
 
@@ -235,44 +235,37 @@ inline void fast_io() {
     cin.tie(nullptr);
 }
 
-#define check 1
+#define check 0
 // ==============================================================================
 // SOLVE()
 // ==============================================================================
 
 void solve() {
-    int n, p; cin >> n >> p;
-    vi fib(n+1); fib[0]=1; fib[1]=1; 
-    if (n>1) fib[2]=2%p;
-    vi dp(n+1); dp[1]=1;
-    vi sums(n+1); sums[1]=1;
-    vi augs(n+1); augs[1]=1;
-    loop(i, 2, n+1) {
-        fib[i]=fib[i-1]+fib[i-2];
-        fib[i]%=p;
+    vi eles(26); loop(i, 0, 26) cin >> eles[i];
+    int t = accumulate(all(eles), 0LL);
+    // classic sum counting DP
+    vi dp(t/2+1, 0); dp[0]=1;
+    loop(i, 0, 26) {
+        int x = eles[i];
+        for (int j=t/2;j>=x && x>0;j--) {
+            dp[j]+=dp[j-x];
+            dp[j]%=mod9;
+        }
+        // debug(dp)
     }
-    // main
-    loop(i, 2, n+1) {
-        dp[i]=-augs[i-1];
-        dp[i]+=sums[i-1]*fib[i];
-        dp[i]%=p; dp[i]+=p; dp[i]%=p;
-        dp[i]*=invmod(2, p);
-        dp[i]%=p; 
-
-        sums[i]=sums[i-1]+dp[i];
-        sums[i]%=p;
-        augs[i]=augs[i-1]+fib[i]*dp[i];
-        augs[i]%=p;
+    int bigg=1;
+    bigg*=fact[t/2]*fact[(t+1)/2];
+    bigg%=mod9;
+    loop(i, 0, 26) {
+        bigg*=invFact[eles[i]];
+        bigg%=mod9;
     }
-    // debug(fib)
-    // debug(sums)
-    // debug(augs)
-    // debug(dp)
-    cout<<dp[n]<<endl;
+    bigg*=dp[t/2]; bigg%=mod9;
+    cout<<bigg<<endl;
 }
 
 int32_t main() {
-    // precomputeFactorials();
+    precomputeFactorials(MAXM-1, mod9);
     // sieve();
     fast_io();
     int test;
